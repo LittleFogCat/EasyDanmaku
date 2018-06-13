@@ -5,39 +5,40 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.VideoView;
 
 import top.littlefogcat.danmakulib.danmaku.Danmaku;
-import top.littlefogcat.danmakulib.danmaku.DanmakuManager;
-import top.littlefogcat.danmakulib.danmaku.IDanmakuManager;
+import top.littlefogcat.danmakulib.danmaku.DanmakuContainer;
 
 public class MainActivity extends AppCompatActivity {
-    private FrameLayout mContainer;
+    private DanmakuContainer mDanmakuContainer;
     private EditText mEtInput;
     private Button mBtnSend;
     private Button mBtnRandom;
-
-    private IDanmakuManager mDanmakuManager;
+    private VideoView mVV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContainer = findViewById(R.id.container);
+        findView();
+        initView();
+    }
+
+    private void findView() {
+        mDanmakuContainer = findViewById(R.id.container);
         mEtInput = findViewById(R.id.etInput);
         mBtnSend = findViewById(R.id.btnSend);
         mBtnRandom = findViewById(R.id.btnRandom);
-        mDanmakuManager = DanmakuManager.newInstance(mContainer);
-
-        initView();
+        mVV = findViewById(R.id.vv);
     }
 
     private void initView() {
         mBtnSend.setOnClickListener(v -> {
             String text = mEtInput.getText().toString();
             Danmaku danmaku = new Danmaku(text, FakeDanmakuCreator.randomColor());
-            mDanmakuManager.show(danmaku);
+            mDanmakuContainer.show(danmaku);
         });
         mBtnRandom.setOnClickListener(v -> {
             if (!mShouldRunTaskAgain) {
@@ -48,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
                 mBtnRandom.setText(R.string.start_random);
             }
         });
+
+        mVV.setVideoPath("http://video.699pic.com/videos/95/14/21/eB24X8qGe6bB1516951421.mp4");
+        mVV.setFocusable(false);
+        mVV.setFocusableInTouchMode(false);
+        mVV.setOnPreparedListener(mp -> mp.setLooping(true));
+        mVV.start();
+
+        mBtnSend.requestFocus();
     }
 
     private void startSendRandomDanmaku() {
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             Danmaku danmaku = FakeDanmakuCreator.createFakeDanmaku();
-            mDanmakuManager.show(danmaku);
+            mDanmakuContainer.show(danmaku);
             if (mShouldRunTaskAgain) {
                 mHandler.postDelayed(this, RANDOM_TASK_INTERVAL);
             }

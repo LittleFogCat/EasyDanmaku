@@ -22,14 +22,9 @@ public interface IDanmakuManager {
     Settings getSettings();
 
     class Settings {
-        private int maxLine = 10;
-
-        public int getMaxLine() {
-            return maxLine;
-        }
-
-        public void setMaxLine(int maxLine) {
-            this.maxLine = maxLine;
-        }
+        public int maxLine = 10;
+        public int largeTextSizePx = 52;
+        public int middleTextSizePx = 40;
+        public int littleTextSizePx = 28;
     }
 }

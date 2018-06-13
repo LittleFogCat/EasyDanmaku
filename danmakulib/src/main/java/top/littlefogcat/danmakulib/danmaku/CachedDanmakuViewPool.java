@@ -35,7 +35,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
      * 获取一个脏的DanmakuView。
      */
     @Nullable
-    public DanmakuView getDirty() {
+    private DanmakuView getDirty() {
         Log.v(TAG, "getDirty: in use = " + mInUseSize + ", idle = " + mDanmakuQueue.size());
 
         if (count() < mCoreSize) {
@@ -67,6 +67,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
     }
 
     @Override
+    @SuppressWarnings("StatementWithEmptyBody")
     public void release() {
         while (mDanmakuQueue.poll() != null) {
         }
@@ -76,7 +77,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
         return mInUseSize + mDanmakuQueue.size();
     }
 
-    public void recycle(DanmakuView view) {
+    private void recycle(DanmakuView view) {
         boolean offer = mDanmakuQueue.offer(view);
         Log.v(TAG, "recycle: " + (offer ? "success" : "fail"));
         mInUseSize--;

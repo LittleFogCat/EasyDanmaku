@@ -32,13 +32,7 @@ public class DanmakuView extends TextView {
     private Danmaku mDanmaku;
     private Animation mAnim;
 
-    private static final int TEXT_SIZE_MIDDLE = 40;
-    private static final int TEXT_SIZE_SMALL = 28;
-    private int mTextSizeMiddle = ScreenUtil.autoWidth(TEXT_SIZE_MIDDLE);
-    private int mTextSizeSmall = ScreenUtil.autoWidth(TEXT_SIZE_SMALL);
-
     private List<OnEnterListener> mOnEnterListeners = new ArrayList<>();
-    //    private OnExitListener mOnExitListener;
     private List<OnExitListener> mOnExitListeners = new ArrayList<>();
 
     public DanmakuView(Context context) {
@@ -64,7 +58,6 @@ public class DanmakuView extends TextView {
         view.init(rootView, danmaku, y, duration, onEnterListener, onDismissListener);
         return view;
     }
-
 
     /**
      * @param rootView          弹幕容器
@@ -99,7 +92,9 @@ public class DanmakuView extends TextView {
         setTextColor(danmaku.getColor());
         setShadowLayer(2.5f, 0, 0, Color.BLACK);
         setSingleLine(true);
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, (danmaku.getSize() == 0 ? mTextSizeMiddle : mTextSizeSmall));
+
+        int size = ScreenUtil.autoWidth(danmaku.getSize());
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
     }
 
     public Danmaku getDanmaku() {

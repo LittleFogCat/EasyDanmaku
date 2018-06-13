@@ -24,11 +24,11 @@ public class FakeDanmakuCreator {
     }
 
     public static Danmaku createFakeDanmaku() {
-        return new Danmaku(randomString(), randomColor(), 0, 0);
+        return new Danmaku(randomString(), randomColor());
     }
 
     public void show(ViewGroup root) {
-        Danmaku danmaku = new Danmaku(randomString(), randomColor(), 0, 0);
+        Danmaku danmaku = new Danmaku(randomString(), randomColor());
         DanmakuView danmakuView = mPool.get();
         if (danmakuView == null) {
             return;
@@ -39,7 +39,7 @@ public class FakeDanmakuCreator {
     }
 
     private static int[] mColors = {Color.WHITE, Color.YELLOW, Color.RED};
-    private static String[] mStrings = {"假装有弹幕", "富强民主文明和谐自由平等公正法治爱国敬业诚信友善", "加油哦", "AcFun是一家弹幕视频网站", "bilibili是国内知名的视频弹幕网站"};
+    private static String[] mStrings = {"假装有弹幕", "富强民主", "文明和谐自由平等", "公正法治", "爱国敬业诚信友善", "加油哦", "AcFun是一家弹幕视频网站", "bilibili是国内知名的视频弹幕网站"};
 
     public static int randomColor() {
         int r = randomInt(0, mColors.length);

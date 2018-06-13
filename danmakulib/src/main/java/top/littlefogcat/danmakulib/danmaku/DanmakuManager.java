@@ -48,8 +48,8 @@ public class DanmakuManager implements IDanmakuManager {
         if (view == null) {
             return;
         }
-        int y = RandomUtil.randomInt(0, mSettings.getMaxLine());
-        int duration = RandomUtil.randomInt(12000, 18000);
+        int y = RandomUtil.randomInt(0, mSettings.maxLine);// TODO: 2018/6/13 设定防重叠
+        int duration = RandomUtil.randomInt(16000, 24000);// TODO: 2018/6/13 设置滚动时长
         view.init(mRootView, danmaku, y, duration, null, null);
         view.start();
     }
@@ -60,6 +60,7 @@ public class DanmakuManager implements IDanmakuManager {
     }
 
     public void release() {
+        mPool.release();
     }
 
 }
