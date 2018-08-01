@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
+@Deprecated
 public class DanmakuContainer extends FrameLayout {
     private IDanmakuManager mManager;
 

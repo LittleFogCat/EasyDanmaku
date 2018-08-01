@@ -22,9 +22,18 @@ public interface IDanmakuManager {
     Settings getSettings();
 
     class Settings {
-        public int maxLine = 10;
-        public int largeTextSizePx = 52;
-        public int middleTextSizePx = 40;
-        public int littleTextSizePx = 28;
+        private int maxLine = 10;
+
+        public int getMaxLine() {
+            return maxLine;
+        }
+
+        public void setMaxLine(int maxLine) {
+            this.maxLine = maxLine;
+        }
+    }
+
+    default DanmakuConfig getConfig() {
+        return DanmakuConfig.getConfig();
     }
 }

@@ -40,7 +40,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
 
         if (count() < mCoreSize) {
             // 如果总弹幕量小于弹幕池核心数，直接新建
-            DanmakuView view = new DanmakuView(mContext);
+            DanmakuView view = DanmakuViewFactory.create( mContext);
             view.addOnExitListener(this::recycle);
             mInUseSize++;
             return view;
@@ -51,7 +51,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
                 mInUseSize++;
                 return view;
             }
-            view = new DanmakuView(mContext);
+            view = DanmakuViewFactory.create(mContext);
             view.addOnExitListener(this::recycle);
             mInUseSize++;
             return view;
@@ -67,17 +67,18 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
     }
 
     @Override
-    @SuppressWarnings("StatementWithEmptyBody")
     public void release() {
         while (mDanmakuQueue.poll() != null) {
+            Log.v(TAG, "release: delete " + mDanmakuQueue.size());
         }
     }
 
+    @Override
     public int count() {
         return mInUseSize + mDanmakuQueue.size();
     }
 
-    private void recycle(DanmakuView view) {
+    public void recycle(DanmakuView view) {
         boolean offer = mDanmakuQueue.offer(view);
         Log.v(TAG, "recycle: " + (offer ? "success" : "fail"));
         mInUseSize--;

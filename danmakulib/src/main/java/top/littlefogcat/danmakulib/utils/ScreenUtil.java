@@ -14,10 +14,10 @@ public class ScreenUtil {
     private static final String TAG = "ScreenUtil";
 
     private static boolean sInit;
-    private static int sScreenWidth;
-    private static int sScreenHeight;
-    private static int sDesignWidth;
-    private static int sDesignHeight;
+    private static int sScreenWidth = 1920;
+    private static int sScreenHeight = 1080;
+    private static int sDesignWidth = 1920;
+    private static int sDesignHeight = 1080;
 
     /**
      * @param designW 设计图基准的宽度，如1920

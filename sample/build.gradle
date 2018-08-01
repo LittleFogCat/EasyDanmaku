@@ -1,14 +1,18 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 
+def config = rootProject.ext.android
+def dependency = rootProject.ext.dependency
+
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.compileSdkVersion
     defaultConfig {
         applicationId "top.littlefogcat.easydanmaku"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion config.minSdkVersion
+        targetSdkVersion config.targetSdkVersion
+        versionCode config.versionCode
+        versionName generateVersionName(versionCode)
     }
     buildTypes {
         release {
@@ -20,10 +24,25 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${variant.applicationId}-${variant.versionName}.${releaseTime()}-${variant.name}.apk"
+        }
+    }
+}
+
+static def generateVersionName(int versionCode) {
+    return "0.$versionCode"
+}
+
+static def releaseTime() {
+    return new SimpleDateFormat("yyyyMMdd.HHmmss").format(new Date())
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation dependency.appcompat_v7
+
+    implementation dependency.glide
     implementation project(path: ':danmakulib')
 }

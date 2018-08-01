@@ -1,13 +1,12 @@
 package top.littlefogcat.danmakulib.danmaku;
 
-import android.content.Context;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.ref.SoftReference;
 
 import top.littlefogcat.danmakulib.utils.RandomUtil;
-import top.littlefogcat.danmakulib.utils.ScreenUtil;
 
 /**
  * Created by jjy on 2018/6/6.
@@ -19,48 +18,72 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
 
 public class DanmakuManager implements IDanmakuManager {
     private static final String TAG = "DanmakuManager";
-    private ViewGroup mRootView;
+    private static DanmakuManager sInstance;
+    private SoftReference<ViewGroup> mRootView;
     private Settings mSettings;
-    private DanmakuViewPool mPool;
+    private DanmakuViewPool mPool; // 弹幕view池，用于复用
 
-    private List<Integer> mLines = new ArrayList<>(); // 每一行弹幕的数量
-
-    private DanmakuManager(Context context) {
-        ScreenUtil.init(context, 1920, 1080);
-        mPool = DanmakuViewPools.newCachedDanmakuViewPool(context);
-        mSettings = new Settings();
+    private DanmakuManager() {
     }
 
+    public static IDanmakuManager getInstance() {
+        if (sInstance == null) {
+            sInstance = new DanmakuManager();
+        }
+        return sInstance;
+    }
+
+    @Deprecated
     public static IDanmakuManager newInstance(ViewGroup rootView) {
-        DanmakuManager manager = new DanmakuManager(rootView.getContext());
+        DanmakuManager manager = new DanmakuManager();
         manager.setRootView(rootView);
         return manager;
     }
 
     @Override
     public void setRootView(ViewGroup rootView) {
-        mRootView = rootView;
+        mRootView = new SoftReference<>(rootView);
+        mPool = DanmakuViewPools.newCachedDanmakuViewPool(rootView.getContext());
+        mSettings = new Settings();
     }
 
     @Override
     public void show(Danmaku danmaku) {
         DanmakuView view = mPool.get();
         if (view == null) {
+            Log.w(TAG, "show: Too many danmaku, discard");
             return;
         }
-        int y = RandomUtil.randomInt(0, mSettings.maxLine);// TODO: 2018/6/13 设定防重叠
-        int duration = RandomUtil.randomInt(16000, 24000);// TODO: 2018/6/13 设置滚动时长
-        view.init(mRootView, danmaku, y, duration, null, null);
-        view.start();
+        if (mRootView.get() == null) {
+            Log.w(TAG, "show: Root view is null. Didn't call setRootView() or root view has been recycled.");
+            return;
+        }
+        int y = getYEnsureNoOverlapping();
+        int duration = RandomUtil.randomInt(12000, 18000);
+        Log.d(TAG, "show: " + danmaku);
+        view.init(mRootView.get(), danmaku, y, duration);
+        view.show();
+    }
+
+    private int mLastY = 0;
+    private long mLastSend = SystemClock.currentThreadTimeMillis();
+
+    private int getYEnsureNoOverlapping() {
+        long currentMillis = SystemClock.currentThreadTimeMillis();
+        int y;
+        if (currentMillis - mLastSend < 6000) {
+            y = RandomUtil.randomIntExcept(0, mSettings.getMaxLine(), mLastY);// 随机行数
+        } else {
+            y = RandomUtil.randomInt(0, mSettings.getMaxLine());// 随机行数
+        }
+        mLastY = y;
+        mLastSend = currentMillis;
+        return y;
     }
 
     @Override
     public Settings getSettings() {
         return mSettings;
-    }
-
-    public void release() {
-        mPool.release();
     }
 
 }

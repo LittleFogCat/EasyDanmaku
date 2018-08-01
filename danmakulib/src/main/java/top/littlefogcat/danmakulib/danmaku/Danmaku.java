@@ -1,21 +1,20 @@
 package top.littlefogcat.danmakulib.danmaku;
 
+import android.graphics.Color;
+
 /**
  * Created by jjy on 2018/6/6.
  */
 
 public class Danmaku {
     private String content; // 弹幕内容
-    private int color; // 弹幕颜色
+    private int color = Color.WHITE; // 弹幕颜色
     private int type;// 0滚动，1顶部，2底部
-    private int size;// 字体大小
-
-    private Danmaku() {
-        this("", 0xFFFFFFFF);
-    }
+    private int size;// 字体大小0中1小
+    private String headUrl;// 头像url
 
     public Danmaku(String content, int color) {
-        this(content, color, 0, 40);
+        this(content, color, 0, 0);
     }
 
     public Danmaku(String content, int color, int type, int size) {
@@ -23,6 +22,14 @@ public class Danmaku {
         this.color = color;
         this.type = type;
         this.size = size;
+    }
+
+    public Danmaku(String content, int color, int type, int size, String headUrl) {
+        this.content = content;
+        this.color = color;
+        this.type = type;
+        this.size = size;
+        this.headUrl = headUrl;
     }
 
     public String getContent() {
@@ -57,35 +64,21 @@ public class Danmaku {
         this.size = size;
     }
 
-    public static class Builder {
-        private Danmaku mDanmaku;
+    public String getHeadUrl() {
+        return headUrl;
+    }
 
-        public Builder() {
-            mDanmaku = new Danmaku();
-        }
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
+    }
 
-        public Danmaku text(String text) {
-            mDanmaku.content = text;
-            return mDanmaku;
-        }
-
-        public Danmaku color(int color) {
-            mDanmaku.color = color;
-            return mDanmaku;
-        }
-
-        public Danmaku textSize(int textSize) {
-            mDanmaku.size = textSize;
-            return mDanmaku;
-        }
-
-        public Danmaku text(int type) {
-            mDanmaku.type = type;
-            return mDanmaku;
-        }
-
-        public Danmaku build() {
-            return this.mDanmaku;
-        }
+    @Override
+    public String toString() {
+        return "Danmaku{" +
+                "content='" + content + '\'' +
+                ", color=" + color +
+                ", type=" + type +
+                ", size=" + size +
+                '}';
     }
 }

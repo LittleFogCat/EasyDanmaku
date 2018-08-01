@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
 
+def dependency = rootProject.ext.dependency
 android {
     compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName generateVersionName(versionCode)
     }
 
     buildTypes {
@@ -23,7 +24,13 @@ android {
     }
 }
 
+static def generateVersionName(int versionCode) {
+    return "0.$versionCode"
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation dependency.appcompat_v7
+
+    compileOnly dependency.glide
 }

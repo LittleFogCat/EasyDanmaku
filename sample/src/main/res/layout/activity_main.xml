@@ -7,10 +7,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <VideoView
-        android:id="@+id/vv"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#8888" />
 
     <top.littlefogcat.danmakulib.danmaku.DanmakuContainer
         android:id="@+id/container"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="@string/_666666" />
+            android:text="@string/text666" />
 
         <Button
             android:id="@+id/btnSend"
