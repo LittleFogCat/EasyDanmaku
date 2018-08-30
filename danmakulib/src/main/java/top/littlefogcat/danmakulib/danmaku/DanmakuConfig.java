@@ -6,6 +6,9 @@ import static top.littlefogcat.danmakulib.danmaku.DanmakuConstant.HEAD_SQUARE;
 import static top.littlefogcat.danmakulib.danmaku.DanmakuConstant.MODE_IMG_TEXT;
 import static top.littlefogcat.danmakulib.danmaku.DanmakuConstant.MODE_TEXT_ONLY;
 
+/**
+ * 全局配置
+ */
 public class DanmakuConfig {
     private static DanmakuConfig sConfig;
 

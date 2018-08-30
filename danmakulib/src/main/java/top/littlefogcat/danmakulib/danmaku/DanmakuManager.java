@@ -21,7 +21,6 @@ public class DanmakuManager implements IDanmakuManager {
     private static final String TAG = "DanmakuManager";
     private static DanmakuManager sInstance;
     private SoftReference<ViewGroup> mRootView;
-    private DanmakuConfig mConfig;
     private DanmakuViewPool mPool; // 弹幕view池，用于复用
 
     private DanmakuManager() {
@@ -41,16 +40,15 @@ public class DanmakuManager implements IDanmakuManager {
     public void setRootView(ViewGroup rootView) {
         mRootView = new SoftReference<>(rootView);
         mPool = DanmakuViewPools.newCachedDanmakuViewPool(rootView.getContext());
-        mConfig = DanmakuConfig.getConfig();
         // fixme
         if (!ScreenUtil.isInit()) {
-            ScreenUtil.init(rootView.getContext(), mConfig.designWidth, mConfig.designHeight);
+            ScreenUtil.init(rootView.getContext(), getConfig().designWidth, getConfig().designHeight);
         }
     }
 
     @Override
     public DanmakuConfig getConfig() {
-        return mConfig;
+        return DanmakuConfig.getConfig();
     }
 
     @Override
@@ -79,9 +77,9 @@ public class DanmakuManager implements IDanmakuManager {
         long currentMillis = SystemClock.currentThreadTimeMillis();
         int y;
         if (currentMillis - mLastSend < 6000) {
-            y = RandomUtil.randomIntExcept(0, mConfig.getMaxLine(), mLastY);// 随机行数
+            y = RandomUtil.randomIntExcept(0, getConfig().getMaxLine(), mLastY);// 随机行数
         } else {
-            y = RandomUtil.randomInt(0, mConfig.getMaxLine());// 随机行数
+            y = RandomUtil.randomInt(0, getConfig().getMaxLine());// 随机行数
         }
         mLastY = y;
         mLastSend = currentMillis;

@@ -17,7 +17,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
     private int mInUseSize = 0;// 正在使用中的View
     private int mCoreSize = 5;
     private int mMaxSize = 100;
-    private int mKeepAliveTime = 60000;
+    private int mKeepAliveTime = 60000;// todo 回收
     private BlockingQueue<DanmakuView> mDanmakuQueue;
 
     CachedDanmakuViewPool(Context context, int coreSize, int maxSize, BlockingQueue<DanmakuView> workQueue) {
@@ -40,7 +40,7 @@ public class CachedDanmakuViewPool implements DanmakuViewPool {
 
         if (count() < mCoreSize) {
             // 如果总弹幕量小于弹幕池核心数，直接新建
-            DanmakuView view = DanmakuViewFactory.create( mContext);
+            DanmakuView view = DanmakuViewFactory.create(mContext);
             view.addOnExitListener(this::recycle);
             mInUseSize++;
             return view;

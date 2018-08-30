@@ -38,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDanmaku() {
         mDanmakuManager = DanmakuManager.getInstance();
-        mDanmakuManager.setRootView(mDanmakuContainer);
         mDanmakuManager.getConfig()
                 .useImgTextMode()
                 .useCircleHead()
+                .setDesignSize(1920, 1080)
                 .setMaxLine(6);
+        mDanmakuManager.setRootView(mDanmakuContainer);
     }
 
     private void initView() {
