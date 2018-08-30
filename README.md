@@ -15,12 +15,12 @@
 ```
 #### 2、代码中使用
 ```
+    // 设置容器
     FrameLayout container = findViewById(R.id.container);
+    DanmakuManager.getInstance().setRootView(container);
     
-    // 显示
-    IDanmakuManager dm = DanmakuManager.getInstance();
-    dm.setRootView(container);
-    dm.show(danmaku);
+    // 显示弹幕
+    DanmakuManager.getInstance().show(new Danmaku("666", Color.RED));
 ```
 
 **就是这么easy**
