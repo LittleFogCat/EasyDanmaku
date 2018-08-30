@@ -83,4 +83,8 @@ public class ScreenUtil {
     public static void setScreenHeight(int h) {
         sScreenHeight = h;
     }
+
+    public static boolean isInit() {
+        return sInit;
+    }
 }

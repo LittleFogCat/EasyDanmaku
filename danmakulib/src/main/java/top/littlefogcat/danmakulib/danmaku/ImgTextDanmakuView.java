@@ -52,8 +52,8 @@ public class ImgTextDanmakuView implements DanmakuView {
     public void init(ViewGroup rootView, Danmaku danmaku, int y, int duration) {
         setRootView(rootView);
         mView = LayoutInflater.from(mContext).inflate(R.layout.danmaku_view_layout, mRootView, false);
-        mIvUserhead = (ImageView) mView.findViewById(R.id.ivUserHead);
-        mTvContent = (TextView) mView.findViewById(R.id.tvContent);
+        mIvUserhead = mView.findViewById(R.id.ivUserHead);
+        mTvContent = mView.findViewById(R.id.tvContent);
 
         setDanmaku(danmaku);
         initAnimation(y, duration);

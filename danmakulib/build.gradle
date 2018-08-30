@@ -29,8 +29,6 @@ static def generateVersionName(int versionCode) {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation dependency.appcompat_v7
-
+    compileOnly dependency.appcompat_v7
     compileOnly dependency.glide
 }

@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         mDanmakuManager.setRootView(mDanmakuContainer);
         mDanmakuManager.getConfig()
                 .useImgTextMode()
-                .useCircleHead();
+                .useCircleHead()
+                .setMaxLine(6);
     }
 
     private void initView() {

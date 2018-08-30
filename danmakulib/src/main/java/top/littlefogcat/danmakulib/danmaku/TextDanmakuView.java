@@ -37,7 +37,6 @@ public class TextDanmakuView extends TextView implements DanmakuView {
     private int mTextSizeSmall = ScreenUtil.autoWidth(28);
 
     private List<OnEnterListener> mOnEnterListeners = new ArrayList<>();
-    //    private OnExitListener mOnExitListener;
     private List<OnExitListener> mOnExitListeners = new ArrayList<>();
 
     TextDanmakuView(Context context) {
