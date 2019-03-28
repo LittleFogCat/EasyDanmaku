@@ -25,6 +25,26 @@
 #### 就是这么easy
 
 ---
+
+#### 如果想要更easy，你可以直接在布局中引入DanmakuLayout
+```xml
+    <top.littlefogcat.danmakulib.danmaku.DanmakuLayout
+        android:id="@+id/danmakuLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#eee" />
+```
+#### 然后
+```java
+    mDanmakuLayout = findViewById(R.id.danmakuLayout);
+    mDanmakuLayout.send("test");
+```
+
+#### 不过我不推荐这么做，因为这个Layout有很多问题，比如旋转屏幕之后就显示异常之类的，有兴趣的话可以自己改着玩。
+
+
+---
 ---
 
 
