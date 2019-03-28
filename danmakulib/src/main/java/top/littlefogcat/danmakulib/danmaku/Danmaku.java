@@ -1,84 +1,47 @@
 package top.littlefogcat.danmakulib.danmaku;
 
-import android.graphics.Color;
-
 /**
- * Created by jjy on 2018/6/6.
+ * Created by LittleFogCat.
  */
 
 public class Danmaku {
-    private String content; // 弹幕内容
-    private int color = Color.WHITE; // 弹幕颜色
-    private int type;// 0滚动，1顶部，2底部
-    private int size;// 字体大小0中1小
-    private String headUrl;// 头像url
+    public static final String COLOR_WHITE = "#ffffffff";
+    public static final String COLOR_RED = "#ffff0000";
+    public static final String COLOR_GREEN = "#ff00ff00";
+    public static final String COLOR_BLUE = "#ff0000ff";
+    public static final String COLOR_YELLOW = "#ffffff00";
+    public static final String COLOR_PURPLE = "#ffff00ff";
 
-    public Danmaku(String content, int color) {
-        this(content, color, 0, 0);
+    public String text;// 文字
+    public TextSize textSize = TextSize.normal;// 字号：标准、小号、大号
+    public Mode mode = Mode.scroll;// 模式：滚动、顶部、底部
+    public String color = COLOR_WHITE;// 默认白色
+
+    public enum TextSize {
+        normal, small, large
     }
 
-    public Danmaku(String content, int color, int type, int size) {
-        this.content = content;
+    public enum Mode {
+        scroll, top, bottom
+    }
+
+    public Danmaku() {
+    }
+
+    public Danmaku(String text, TextSize textSize, Mode mode, String color) {
+        this.text = text;
+        this.textSize = textSize;
+        this.mode = mode;
         this.color = color;
-        this.type = type;
-        this.size = size;
-    }
-
-    public Danmaku(String content, int color, int type, int size, String headUrl) {
-        this.content = content;
-        this.color = color;
-        this.type = type;
-        this.size = size;
-        this.headUrl = headUrl;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public String getHeadUrl() {
-        return headUrl;
-    }
-
-    public void setHeadUrl(String headUrl) {
-        this.headUrl = headUrl;
     }
 
     @Override
     public String toString() {
         return "Danmaku{" +
-                "content='" + content + '\'' +
-                ", color=" + color +
-                ", type=" + type +
-                ", size=" + size +
+                "text='" + text + '\'' +
+                ", textSize=" + textSize +
+                ", mode=" + mode +
+                ", color='" + color + '\'' +
                 '}';
     }
 }

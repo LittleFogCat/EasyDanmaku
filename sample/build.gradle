@@ -1,48 +1,32 @@
-import java.text.SimpleDateFormat
-
 apply plugin: 'com.android.application'
 
-def config = rootProject.ext.android
-def dependency = rootProject.ext.dependency
-
 android {
-    compileSdkVersion config.compileSdkVersion
+    compileSdkVersion 27
+
     defaultConfig {
-        applicationId "top.littlefogcat.easydanmaku"
-        minSdkVersion config.minSdkVersion
-        targetSdkVersion config.targetSdkVersion
-        versionCode config.versionCode
-        versionName generateVersionName(versionCode)
+        applicationId "top.littlefogcat.sampleplus"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "${variant.applicationId}-${variant.versionName}.${releaseTime()}-${variant.name}.apk"
-        }
-    }
-}
 
-static def generateVersionName(int versionCode) {
-    return "0.$versionCode"
-}
-
-static def releaseTime() {
-    return new SimpleDateFormat("yyyyMMdd.HHmmss").format(new Date())
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation dependency.appcompat_v7
 
-    implementation dependency.glide
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation project(path: ':danmakulib')
 }

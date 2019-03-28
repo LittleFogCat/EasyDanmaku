@@ -1,48 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3a558597"
-    android:orientation="vertical"
+    android:background="#fff"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/danmakuContainer"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/img" />
+
+    <View
+        android:id="@+id/etSendBg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/danmakuContainer"
+        android:background="#333" />
+
+    <EditText
+        android:id="@+id/etSend"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@id/danmakuContainer"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/main_et_send_danmaku_bg"
+        android:gravity="center_vertical"
+        android:hint="@string/send_danmaku"
+        android:imeActionId="100"
+        android:imeActionLabel="发射"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:textColorHint="#999"
+        android:textSize="14sp" />
+
+
+    <View
+        android:id="@+id/centerView"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_below="@id/etSendBg"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tvIntro"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@id/etSendBg"
+        android:layout_toStartOf="@id/centerView"
+        android:gravity="center"
+        android:text="@string/introduce"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@id/etSendBg"
+        android:layout_toEndOf="@id/centerView"
+        android:gravity="center"
+        android:text="@string/comment" />
+
+    <View
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@id/centerView"
+        android:background="@drawable/shadow" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="3dp"
+        android:layout_alignStart="@+id/shadowView"
+        android:layout_alignBottom="@id/tvIntro"
+        android:layout_marginStart="88dp"
+        android:background="@color/colorAccent" />
+
+    <View
+        android:id="@+id/circle"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/circle" />
+
+    <View
+        android:layout_width="184dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@id/circle"
+        android:background="#eee" />
+
+    <View
+        android:layout_width="184dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@id/circle"
+        android:background="#eee" />
+
+    <View
+        android:layout_width="184dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginEnd="16dp"
+        android:background="#eee" />
+
+    <View
+        android:layout_width="184dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="16dp"
+        android:background="#eee" />
+
+    <View
+        android:layout_width="184dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="146dp"
+        android:layout_marginEnd="16dp"
+        android:background="#eee" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#8888" />
+        android:layout_height="2dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_marginTop="184dp"
+        android:background="#eee" />
 
-    <FrameLayout
-        android:id="@+id/container"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="2dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_marginTop="300dp"
+        android:background="#eee" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <View
+        android:layout_width="112dp"
+        android:layout_height="84dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="200dp"
+        android:background="#eee" />
+
+    <View
+        android:layout_width="112dp"
+        android:layout_height="84dp"
+        android:layout_below="@id/tvIntro"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="318dp"
+        android:background="#eee" />
+
+    <Button
+        android:id="@+id/btnStartRandom"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#8eee"
-        android:padding="4dp">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="38dp"
+        android:background="#333"
+        android:padding="8dp"
+        android:text="@string/start_random_danmaku"
+        android:textColor="#fff" />
 
-        <EditText
-            android:id="@+id/etInput"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/text666" />
-
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/send" />
-
-        <Button
-            android:id="@+id/btnRandom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_random" />
-    </LinearLayout>
-
-</FrameLayout>
+</RelativeLayout>
