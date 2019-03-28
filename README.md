@@ -1,16 +1,50 @@
-# EasyDanmaku v1.0
+# EasyDanmaku
+一个方便简单的Android弹幕控件，顾名思义so easy
+
+### 用法两部曲
+#### 1、在布局中引入一个FrameLayout作为弹幕容器
+```xml
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+```
+
+#### 2、代码中使用
+```java
+    // 1、设置一个FrameLayout为弹幕容器
+    FrameLayout container = findViewById(R.id.container);
+    DanmakuManager.getInstance().setDanmakuContainer(container);
+   
+    // 2、发送弹幕
+    Danmaku dam = new Danmaku();
+    dam.text = "666"; 
+    DanmakuManager.getInstance().send(dam);
+```
+
+#### 就是这么easy
+
+---
+---
+
+
+## EasyDanmaku v1.0
 船新版本，**不兼容老版本**
 
 1、重写了DanmakuView。
+
 2、优化结构，去除冗余类。
+
 3、修复弹幕过长导致显示内容不完整的问题。
+
 4、加入顶部和底部弹幕。
+
 
 
 ---
 
 
-# EasyDanmaku v0.1
+## EasyDanmaku v0.1
 一个方便的Android弹幕控件~
 
 顾名思义，实现起来easy，用起来也easy，（功能也很easy）代码很少，就几个文件，直接复制进项目里去吧；
