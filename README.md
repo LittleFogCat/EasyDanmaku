@@ -22,11 +22,11 @@
     DanmakuManager.getInstance().send(dam);
 ```
 
-### 就是这么easy
+**就是这么easy**
 
 ---
 
-### 1.* 更简单的方式
+## 2. 更简单的方式
 如果想要easier，你可以直接在布局中引入DanmakuLayout
 ```xml
     <top.littlefogcat.danmakulib.danmaku.DanmakuLayout
