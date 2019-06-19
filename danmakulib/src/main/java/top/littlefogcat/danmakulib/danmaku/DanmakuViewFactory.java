@@ -2,6 +2,7 @@ package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 import top.littlefogcat.danmakulib.R;
 
@@ -10,8 +11,12 @@ import top.littlefogcat.danmakulib.R;
  */
 public class DanmakuViewFactory {
     public static DanmakuView createDanmakuView(Context context) {
-        DanmakuView dv = (DanmakuView) LayoutInflater.from(context)
+        return (DanmakuView) LayoutInflater.from(context)
                 .inflate(R.layout.danmaku_view, null, false);
-        return dv;
+    }
+
+    public static DanmakuView createDanmakuView(Context context, ViewGroup parent) {
+        return (DanmakuView) LayoutInflater.from(context)
+                .inflate(R.layout.danmaku_view, parent, false);
     }
 }

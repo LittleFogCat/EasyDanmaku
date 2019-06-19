@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        applicationId "top.littlefogcat.sampleplus"
+        applicationId "top.littlefogcat.sample"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1

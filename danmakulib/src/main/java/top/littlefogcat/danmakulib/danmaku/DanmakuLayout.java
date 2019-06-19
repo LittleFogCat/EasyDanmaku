@@ -1,8 +1,6 @@
 package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -15,17 +13,17 @@ import android.widget.FrameLayout;
 public class DanmakuLayout extends FrameLayout {
     private DanmakuManager mManager;
 
-    public DanmakuLayout(@NonNull Context context) {
+    public DanmakuLayout(Context context) {
         super(context);
         init();
     }
 
-    public DanmakuLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public DanmakuLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public DanmakuLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DanmakuLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -40,14 +38,17 @@ public class DanmakuLayout extends FrameLayout {
         mManager.send(danmaku);
     }
 
+    @Deprecated
     public void send(String text) {
         send(new Danmaku(text, Danmaku.TextSize.normal, Danmaku.Mode.scroll, Danmaku.COLOR_WHITE));
     }
 
+    @Deprecated
     public void send(String text, String color) {
         send(new Danmaku(text, Danmaku.TextSize.normal, Danmaku.Mode.scroll, color));
     }
 
+    @Deprecated
     public void send(String text, Danmaku.TextSize textSize, Danmaku.Mode mode, String color) {
         send(new Danmaku(text, textSize, mode, color));
     }

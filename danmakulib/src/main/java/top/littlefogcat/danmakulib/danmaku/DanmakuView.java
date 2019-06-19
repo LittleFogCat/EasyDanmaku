@@ -1,13 +1,12 @@
 package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +19,8 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  * 这里实现了一些通用的功能。
  * <p>
  * Created by LittleFogCat.
- */
-public class DanmakuView extends android.support.v7.widget.AppCompatTextView {
-    private static final String TAG = DanmakuView.class.getSimpleName();
-
-    private Handler mHandler = new Handler();
+ */@SuppressWarnings("unused")
+public class DanmakuView extends TextView {
 
     /**
      * 弹幕内容
@@ -116,7 +112,7 @@ public class DanmakuView extends android.support.v7.widget.AppCompatTextView {
                 listener.onEnter(this);
             }
         }
-        mHandler.postDelayed(new Runnable() {
+        postDelayed(new Runnable() {
             @Override
             public void run() {
                 setVisibility(GONE);
@@ -217,7 +213,7 @@ public class DanmakuView extends android.support.v7.widget.AppCompatTextView {
 
     private Scroller mScroller;
 
-    private void smoothScrollTo(int x, int y, int duration) {
+    public void smoothScrollTo(int x, int y, int duration) {
         if (mScroller == null) {
             mScroller = new Scroller(getContext(), new LinearInterpolator());
             setScroller(mScroller);

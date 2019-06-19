@@ -1,7 +1,10 @@
 package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -20,6 +23,7 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
     private int mMaxSize;// 弹幕池最大容量
     private int mKeepAliveTime = 60000;// todo 回收
     private BlockingQueue<DanmakuView> mDanmakuQueue;// 空闲队列
+    private WeakReference<FrameLayout> mContainer;
 
     public DanmakuViewPool(Context context) {
         this(context, 5, 100, new LinkedBlockingQueue<DanmakuView>(100));
@@ -39,6 +43,15 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
             mDanmakuQueue = new LinkedBlockingQueue<>(max);
             System.gc();
         }
+    }
+
+    /**
+     * set the danmaku container.
+     *
+     * @param container A FrameLayout on which all danmaku show.
+     */
+    public void setContainer(FrameLayout container) {
+        mContainer = new WeakReference<>(container);
     }
 
     /**
@@ -78,7 +91,8 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
     }
 
     private DanmakuView createView() {
-        return DanmakuViewFactory.createDanmakuView(mContext);
+        return mContainer == null ? DanmakuViewFactory.createDanmakuView(mContext)
+                : DanmakuViewFactory.createDanmakuView(mContext, mContainer.get());
     }
 
     @Override

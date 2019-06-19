@@ -66,6 +66,9 @@ public class ScreenUtil {
      * @return 实际屏幕中的宽度，像素
      */
     public static int autoWidth(int origin) {
+        if (!isInit()) {
+            throw new IllegalStateException("should call init() first");
+        }
         if (sScreenWidth == 0 || sDesignWidth == 0) {
             return origin;
         }
@@ -83,6 +86,9 @@ public class ScreenUtil {
      * @return 实际屏幕中的高度，像素
      */
     public static int autoHeight(int origin) {
+        if (!isInit()) {
+            throw new IllegalStateException("should call init() first");
+        }
         if (sScreenHeight == 0 || sDesignHeight == 0) {
             return origin;
         }

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import top.littlefogcat.danmakulib.danmaku.Danmaku;
+import top.littlefogcat.danmakulib.utils.ScreenUtil;
 
 /**
  * Created by LittleFogCat on 2019/3/29.
@@ -38,7 +39,7 @@ public class DanmakuCreator {
         danmaku.text = randomText();
         danmaku.mode = Danmaku.Mode.scroll;
         danmaku.color = randomColor();
-        danmaku.textSize = Danmaku.TextSize.normal;
+        danmaku.size = ScreenUtil.autoWidth(28);
         return danmaku;
     }
 

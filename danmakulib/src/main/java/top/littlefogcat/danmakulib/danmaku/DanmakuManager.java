@@ -2,7 +2,6 @@ package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -84,10 +83,12 @@ public class DanmakuManager {
             return textSizeNormal;
         }
 
+        @Deprecated
         public void setTextSizeNormal(int textSizeNormal) {
             this.textSizeNormal = textSizeNormal;
         }
 
+        @Deprecated
         public int getTextSizeSmall() {
             if (textSizeNormal == 0) {
                 textSizeNormal = ScreenUtil.autoWidth(28);
@@ -95,6 +96,7 @@ public class DanmakuManager {
             return textSizeSmall;
         }
 
+        @Deprecated
         public void setTextSizeSmall(int textSizeSmall) {
             this.textSizeSmall = textSizeSmall;
         }
@@ -369,20 +371,25 @@ public class DanmakuManager {
         }
 
         mDanmakuContainer = new WeakReference<>(root);
+        mDanmakuViewPool.setContainer(root);
     }
 
     /**
      * 发送一条弹幕
      */
     public int send(Danmaku danmaku) {
+        if (!mInit) {
+            throw new IllegalStateException("must call init() first");
+        }
+
         DanmakuView view = mDanmakuViewPool.get();
 
         if (view == null) {
             L.w(TAG, "show: Too many danmaku, discard");
             return RESULT_FULL_POOL;
         }
-        if (mDanmakuContainer.get() == null) {
-            L.w(TAG, "show: Root view is null. Didn't call setDanmakuContainer() or root view has been recycled.");
+        if (mDanmakuContainer == null || mDanmakuContainer.get() == null) {
+            L.w(TAG, "show: Root view is null.");
             return RESULT_NULL_ROOT_VIEW;
         }
 
@@ -405,7 +412,7 @@ public class DanmakuManager {
         int y = dpc.getY(view);
         if (y == -1) {
             // 装不下了 丢弃
-            L.d(TAG, "send: 装不下了 丢弃 " + danmaku);
+            L.d(TAG, "send: screen is full, too many danmaku" + danmaku);
             return TOO_MANY_DANMAKU;
         }
         FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) view.getLayoutParams();
@@ -424,8 +431,12 @@ public class DanmakuManager {
     }
 
     private int getRealTextSize(Danmaku danmaku) {
-        Config config = getConfig();
-        return danmaku.textSize == Danmaku.TextSize.small ? config.getTextSizeSmall() : config.getTextSizeNormal();
+        if (danmaku.textSize != null && danmaku.size== Danmaku.DEFAULT_TEXT_SIZE) {
+            Config config = getConfig();
+            return danmaku.textSize == Danmaku.TextSize.small ? config.getTextSizeSmall() : config.getTextSizeNormal();
+        }
+
+        return danmaku.size;
     }
 
     /**
