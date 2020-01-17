@@ -26,7 +26,7 @@
 
 ---
 
-## 2. 更简单的方式
+~~## 2. 更简单的方式
 如果想要easier，你可以直接在布局中引入DanmakuLayout
 ```xml
     <top.littlefogcat.danmakulib.danmaku.DanmakuLayout
@@ -42,7 +42,7 @@
     mDanmakuLayout.send("test");
 ```
 
-**不过我不推荐这么做，因为这个Layout有很多问题，比如旋转屏幕之后就显示异常之类的，有兴趣的话可以自己改着玩。**
+**不过我不推荐这么做，因为这个Layout有很多问题，比如旋转屏幕之后就显示异常之类的，有兴趣的话可以自己改着玩。**~~
 
 
 ---
