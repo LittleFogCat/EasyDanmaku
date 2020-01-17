@@ -12,39 +12,22 @@
 
 ### 1.2 代码中使用
 ```java
-    // 1、设置一个FrameLayout为弹幕容器
+    // 获得DanmakuManager单例
+    DanmakuManager dm = DanmakuManager.getInstance();
+    
+    // 设置一个FrameLayout为弹幕容器
     FrameLayout container = findViewById(R.id.container);
-    DanmakuManager.getInstance().setDanmakuContainer(container);
+    dm.setDanmakuContainer(container);
    
-    // 2、发送弹幕
-    Danmaku dam = new Danmaku();
-    dam.text = "666"; 
-    DanmakuManager.getInstance().send(dam);
+    // 发送弹幕
+    Danmaku danmaku = new Danmaku();
+    danmaku.text = "666"; 
+    dm.send(danmaku);
 ```
 
 **就是这么easy**
 
 ---
-
-~~## 2. 更简单的方式（不建议）~~
-~~如果想要easier，你可以直接在布局中引入DanmakuLayout~~
-~~```xml
-    <top.littlefogcat.danmakulib.danmaku.DanmakuLayout
-        android:id="@+id/danmakuLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#eee" />
-```
-然后直接
-```java
-    mDanmakuLayout = findViewById(R.id.danmakuLayout);
-    mDanmakuLayout.send("test");
-```
-~~
-
-~~**不过我不推荐这么做，因为这个Layout有很多问题，比如旋转屏幕之后就显示异常之类的，有兴趣的话可以自己改着玩。**~~
-
 
 ---
 
