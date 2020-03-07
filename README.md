@@ -31,14 +31,13 @@
 
 # changelog
 
-**EasyDanmaku v0.0.2**
+**EasyDanmaku v0.1.1**
 
 修改了字体大小的设置方式；
 其他的一些优化。
 
-**EasyDanmaku v0.0.1**
 
-船新版本，**不兼容老版本**
+**EasyDanmaku v0.1.0**
 
 1、重写了DanmakuView。
 
