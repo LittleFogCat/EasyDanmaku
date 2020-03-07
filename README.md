@@ -1,5 +1,7 @@
 # EasyDanmaku
-一个方便简单的Android弹幕控件，顾名思义so easy
+一个方便简单的Android弹幕控件，顾名思义so easy。
+
+其实就是用TextView+动画实现的，原以为性能会很差，不过没想到在配置很垃圾的AndroidTV上面也很流畅，更不用说手机了，实测在同屏100个弹幕的情况下占的资源和[B站的弹幕库](https://github.com/bilibili/DanmakuFlameMaster)相差无几。
 
 ## 1. 用法两部曲
 ### 1.1 在布局中引入一个FrameLayout作为弹幕容器
@@ -52,7 +54,5 @@
 
 一个方便的Android弹幕控件~
 
-顾名思义，实现起来easy，用起来也easy，（功能也很easy）代码很少，就几个文件，直接复制进项目里去吧；
-
-其实就是用TextView+动画实现的，本来以为性能会很差，不过没想到在配置很垃圾的AndroidTV上面也很流畅，更不用说手机了，占的资源和B站的弹幕库差不多；
+顾名思义，实现起来easy，用起来也easy，（功能也很easy）代码很少，就几个文件，直接复制进项目里去吧！
 
