@@ -19,7 +19,8 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  * 这里实现了一些通用的功能。
  * <p>
  * Created by LittleFogCat.
- */@SuppressWarnings("unused")
+ */
+@SuppressWarnings("unused")
 public class DanmakuView extends TextView {
 
     /**
@@ -112,17 +113,14 @@ public class DanmakuView extends TextView {
                 listener.onEnter(this);
             }
         }
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setVisibility(GONE);
-                if (hasOnExitListener()) {
-                    for (OnExitListener listener : getListenerInfo().mOnExitListener) {
-                        listener.onExit(DanmakuView.this);
-                    }
+        postDelayed(() -> {
+            setVisibility(GONE);
+            if (hasOnExitListener()) {
+                for (OnExitListener listener : getListenerInfo().mOnExitListener) {
+                    listener.onExit(DanmakuView.this);
                 }
-                parent.removeView(DanmakuView.this);
             }
+            parent.removeView(DanmakuView.this);
         }, duration);
     }
 
@@ -227,7 +225,7 @@ public class DanmakuView extends TextView {
     @Override
     public void computeScroll() {
         if (mScroller != null && mScroller.computeScrollOffset()) {
-//            L.v(TAG, "computeScroll: " + mScroller.getCurrX());
+//            EasyL.v(TAG, "computeScroll: " + mScroller.getCurrX());
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             postInvalidate();
         }

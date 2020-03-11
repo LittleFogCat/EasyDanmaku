@@ -5,8 +5,8 @@ import android.util.Log;
 /**
  * Created by LittleFogCat.
  */
-public class L {
-    private static boolean sEnabled = true;
+public class EasyL {
+    private static boolean sEnabled = false;
 
     public static void setEnabled(boolean enabled) {
         sEnabled = enabled;

@@ -39,42 +39,6 @@ class DanmakuPositionCalculator {
         return -1;
     }
 
-    private int getTopY(DanmakuView view) {
-        for (int i = 0; i < mTops.length; i++) {
-            boolean isShowing = mTops[i];
-            if (!isShowing) {
-                final int finalI = i;
-                mTops[finalI] = true;
-                view.addOnExitListener(new DanmakuView.OnExitListener() {
-                    @Override
-                    public void onExit(DanmakuView view) {
-                        mTops[finalI] = false;
-                    }
-                });
-                return i * getLineHeightWithPadding();
-            }
-        }
-        return -1;
-    }
-
-    private int getBottomY(DanmakuView view) {
-        for (int i = 0; i < mBottoms.length; i++) {
-            boolean isShowing = mBottoms[i];
-            if (!isShowing) {
-                final int finalI = i;
-                mBottoms[finalI] = true;
-                view.addOnExitListener(new DanmakuView.OnExitListener() {
-                    @Override
-                    public void onExit(DanmakuView view) {
-                        mBottoms[finalI] = false;
-                    }
-                });
-                return getParentHeight() - (i + 1) * getLineHeightWithPadding();
-            }
-        }
-        return -1;
-    }
-
     private int getScrollY(DanmakuView view) {
         if (mLastDanmakus.size() == 0) {
             mLastDanmakus.add(view);
@@ -87,7 +51,7 @@ class DanmakuPositionCalculator {
             int timeDisappear = calTimeDisappear(last); // 最后一条弹幕还需多久消失
             int timeArrive = calTimeArrive(view); // 这条弹幕需要多久到达屏幕边缘
             boolean isFullyShown = isFullyShown(last);
-//            L.d(TAG, "getScrollY: 行: " + i + ", 消失时间: " + timeDisappear + ", 到达时间: " + timeArrive + ", 行高: " + lineHeight);
+//            EasyL.d(TAG, "getScrollY: 行: " + i + ", 消失时间: " + timeDisappear + ", 到达时间: " + timeArrive + ", 行高: " + lineHeight);
             if (timeDisappear <= timeArrive && isFullyShown) {
                 // 如果最后一个弹幕在这个弹幕到达之前消失，并且最后一个字已经显示完毕，
                 // 那么新的弹幕就可以在这一行显示
@@ -101,6 +65,32 @@ class DanmakuPositionCalculator {
             return i * getLineHeightWithPadding();
         }
 
+        return -1;
+    }
+
+    private int getTopY(DanmakuView view) {
+        for (int i = 0; i < mTops.length; i++) {
+            boolean isShowing = mTops[i];
+            if (!isShowing) {
+                final int finalI = i;
+                mTops[finalI] = true;
+                view.addOnExitListener(view1 -> mTops[finalI] = false);
+                return i * getLineHeightWithPadding();
+            }
+        }
+        return -1;
+    }
+
+    private int getBottomY(DanmakuView view) {
+        for (int i = 0; i < mBottoms.length; i++) {
+            boolean isShowing = mBottoms[i];
+            if (!isShowing) {
+                final int finalI = i;
+                mBottoms[finalI] = true;
+                view.addOnExitListener(view1 -> mBottoms[finalI] = false);
+                return getParentHeight() - (i + 1) * getLineHeightWithPadding();
+            }
+        }
         return -1;
     }
 
@@ -150,7 +140,6 @@ class DanmakuPositionCalculator {
         float s = textLength + width + 0.0f;
         int t = mDanmakuManager.getDisplayDuration(view.getDanmaku());
 
-//        Log.d(TAG, "calSpeed: 路程=" + s + ", 时间=" + t);
         return s / t;
     }
 

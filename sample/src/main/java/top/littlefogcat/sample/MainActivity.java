@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import top.littlefogcat.danmakulib.danmaku.Danmaku;
 import top.littlefogcat.danmakulib.danmaku.DanmakuManager;
+import top.littlefogcat.danmakulib.utils.EasyL;
 import top.littlefogcat.danmakulib.utils.ScreenUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mEtSend.setOnEditorActionListener((v, actionId, event) -> {
-            Log.d(TAG, "initView: " + actionId);
+            Log.d(TAG, "mEtSend: " + actionId);
             if (actionId == 100 || actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
                 Danmaku danmaku = mDanmakuCreator.create();
                 danmaku.text = mEtSend.getText().toString();
@@ -94,9 +95,10 @@ public class MainActivity extends AppCompatActivity {
      * 初始化一些参数
      */
     private void initDanmaku() {
+        EasyL.setEnabled(true); // 设置打开日志
+
         mManager = DanmakuManager.getInstance();
         mManager.init(this, mContainer); // 必须首先调用init方法
-        mManager.setLogEnabled(true); // 设置打开日志
         mManager.setMaxDanmakuSize(120); // 设置同屏最大弹幕数
 
         DanmakuManager.Config config = mManager.getConfig(); // 弹幕相关设置

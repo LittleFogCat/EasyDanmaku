@@ -35,6 +35,10 @@
 
 ## changelog
 
+**EasyDanmaku v0.1.3**
+
+- 优化DanmakuView缓存复用的机制；
+
 **EasyDanmaku v0.1.2**
 
 - 添加了横竖屏切换的显示；

@@ -15,6 +15,7 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  * Created by LittleFogCat on 2019/3/29.
  */
 public class DanmakuCreator {
+    private static final String TAG = "DanmakuCreator";
     private char[] mCharArr;
     private String[] mColors = {
             "#FFFFFFFF", "#FFFF0000", "#FFFFFF00", "#FF00FF00"
@@ -44,8 +45,6 @@ public class DanmakuCreator {
 
         return danmaku;
     }
-
-    private static final String TAG = "DanmakuCreator";
 
     private String randomText() {
         int length = (int) (26 - Math.sqrt(RandomUtil.nextInt(625)));

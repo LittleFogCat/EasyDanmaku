@@ -1,19 +1,21 @@
 package top.littlefogcat.danmakulib.danmaku;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import top.littlefogcat.danmakulib.utils.L;
+import top.littlefogcat.danmakulib.utils.EasyL;
 
 /**
  * DanmakuView池。
  * Created by LittleFogCat.
+ *
+ * @deprecated use {@link CachedDanmakuViewPool} instead
  */
+@Deprecated
 public class DanmakuViewPool implements Pool<DanmakuView> {
 
     private static final String TAG = "DanmakuViewPool";
@@ -26,7 +28,7 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
     private WeakReference<FrameLayout> mContainer;
 
     public DanmakuViewPool(Context context) {
-        this(context, 5, 100, new LinkedBlockingQueue<DanmakuView>(100));
+        this(context, 0, 100, new LinkedBlockingQueue<>(100));
     }
 
     public DanmakuViewPool(Context context, int coreSize, int maxSize, BlockingQueue<DanmakuView> workQueue) {
@@ -36,6 +38,7 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
         mDanmakuQueue = workQueue;
     }
 
+    @Override
     public void setMaxSize(int maxSize) {
         int max = maxSize == -1 || maxSize > 1000 ? 1000 : maxSize;// FIXME: 2019/3/28 无限制？这里强制小于1000
         if (max != mMaxSize) {
@@ -62,31 +65,26 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
         DanmakuView view;
         if (count() < mCoreSize) {
             // 如果总弹幕量小于弹幕池核心数，直接新建
-            L.v(TAG, "get: 总弹幕量小于弹幕池核心数，直接新建");
+            EasyL.v(TAG, "get: 1. 总弹幕量小于弹幕池核心数，直接新建");
             view = createView();
             mInUseSize++;
         } else if (count() <= mMaxSize) {
             // 如果总弹幕量大于弹幕池核心数，但小于最大值，那么尝试从空闲队列中取，取不到则新建
             view = mDanmakuQueue.poll();
             if (view == null) {
-                L.v(TAG, "get: 总弹幕量大于弹幕池核心数，空闲队列中取不到，新建");
+                EasyL.v(TAG, "get: 2. 总弹幕量大于弹幕池核心数，空闲队列中取不到，新建；当前剩余空闲数=" + mDanmakuQueue.size());
                 view = createView();
             } else {
                 view.restore();
-                L.v(TAG, "get: 总弹幕量大于弹幕池核心数，从空闲队列取");
+                EasyL.v(TAG, "get: 3. 总弹幕量大于弹幕池核心数，从空闲队列取；当前剩余空闲数=" + mDanmakuQueue.size());
             }
             mInUseSize++;
         } else {
             // 如果总弹幕量超过了最大值，那么就丢弃请求，返回Null
-            L.v(TAG, "get: 总弹幕量超过了最大值，那么就丢弃请求，返回Null");
+            EasyL.v(TAG, "get: 4. 总弹幕量超过了最大值，那么就丢弃请求，返回Null");
             return null;
         }
-        view.addOnExitListener(new DanmakuView.OnExitListener() {
-            @Override
-            public void onExit(DanmakuView v) {
-                recycle(v);
-            }
-        });
+        view.addOnExitListener(this::recycle);
         return view;
     }
 
@@ -98,7 +96,7 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
     @Override
     public void release() {
         while (mDanmakuQueue.poll() != null) {
-            L.v(TAG, "release: remain " + mDanmakuQueue.size());
+            EasyL.v(TAG, "release: remain " + mDanmakuQueue.size());
         }
     }
 
@@ -107,11 +105,14 @@ public class DanmakuViewPool implements Pool<DanmakuView> {
         return mInUseSize + mDanmakuQueue.size();
     }
 
-    public void recycle(DanmakuView view) {
+    /**
+     * 当一个view显示完毕，把他回收到空闲队列中。
+     *
+     * @param view 显示完毕的view
+     */
+    private void recycle(DanmakuView view) {
         view.restore();
-        boolean offer = mDanmakuQueue.offer(view);
-        L.v(TAG, "recycle: " + (offer ? "success" : "fail"));
+        mDanmakuQueue.offer(view);
         mInUseSize--;
     }
-
 }
