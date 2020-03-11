@@ -1,1 +1,1 @@
-include ':danmakulib', ':sample'
+include ':easydanmaku', ':sample'
