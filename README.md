@@ -8,7 +8,7 @@
 - 体积小，占用资源少，运行流畅，实测在同屏100个弹幕的情况下占的资源和[B站的弹幕库](https://github.com/bilibili/DanmakuFlameMaster)相差无几；
 - 使用方便，仅用几行代码即可完成弹幕发送；
 
-## 导入
+## 0. 导入
 
 Gradle:
 ```
@@ -41,9 +41,8 @@ implementation 'top.littlefogcat.easydanmaku:easydanmaku:0.1.3'
 
 **就是这么easy**
 
----
 
-## changelog
+## 2. changelog
 
 **EasyDanmaku v0.1.3**
 
