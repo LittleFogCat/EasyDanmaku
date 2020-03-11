@@ -1,10 +1,8 @@
 # EasyDanmaku
 一个方便简单的Android弹幕控件，顾名思义so easy。
 
-<div align="center"><img src="https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif" width="450" /></div>
-<div><img width="20"/></div>
-<div align="center"><img src="https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif" width="300" /></div>
-<br>
+![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif)
+![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif)
 
 - 原理简单，其实就是用TextView+动画实现的，纯java实现，方便修改和扩展；
 - 体积小，占用资源少，运行流畅，实测在同屏100个弹幕的情况下占的资源和[B站的弹幕库](https://github.com/bilibili/DanmakuFlameMaster)相差无几；
