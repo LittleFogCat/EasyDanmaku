@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 import top.littlefogcat.danmakulib.utils.L;
 import top.littlefogcat.danmakulib.utils.ScreenUtil;
@@ -23,37 +21,31 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  */
 public class DanmakuManager {
     private static final String TAG = DanmakuManager.class.getSimpleName();
-    public static final int RESULT_OK = 0;
-    public static final int RESULT_NULL_ROOT_VIEW = 1;
-    public static final int RESULT_FULL_POOL = 2;
-    public static final int TOO_MANY_DANMAKU = 2;
+    private static final int RESULT_OK = 0;
+    private static final int RESULT_NULL_ROOT_VIEW = 1;
+    private static final int RESULT_FULL_POOL = 2;
+    private static final int TOO_MANY_DANMAKU = 2;
 
     private static DanmakuManager sInstance;
 
     /**
      * 弹幕容器
      */
-    private WeakReference<FrameLayout> mDanmakuContainer;
+    WeakReference<FrameLayout> mDanmakuContainer;
     /**
      * 弹幕池
      */
     private DanmakuViewPool mDanmakuViewPool;
 
-    private boolean mInit = false;
-
-
     /**
      * 一些配置
      */
-    public class Config {
+    public static class Config {
+
         /**
-         * 标准弹幕字体大小
+         * 行高，单位px
          */
-        private int textSizeNormal;
-        /**
-         * 小号弹幕字体大小
-         */
-        private int textSizeSmall;
+        private int lineHeight;
 
         /**
          * 滚动弹幕显示时长
@@ -73,32 +65,16 @@ public class DanmakuManager {
          */
         private int maxScrollLine;
 
-        /**
-         * @return 标准弹幕字体大小，如果没有设置，则为1920x1080屏幕的40像素大小（按比例缩放）
-         */
-        public int getTextSizeNormal() {
-            if (textSizeNormal == 0) {
-                textSizeNormal = ScreenUtil.autoWidth(40);
-            }
-            return textSizeNormal;
+        public int getLineHeight() {
+            return lineHeight;
         }
 
-        @Deprecated
-        public void setTextSizeNormal(int textSizeNormal) {
-            this.textSizeNormal = textSizeNormal;
+        public void setLineHeight(int lineHeight) {
+            this.lineHeight = lineHeight;
         }
 
-        @Deprecated
-        public int getTextSizeSmall() {
-            if (textSizeNormal == 0) {
-                textSizeNormal = ScreenUtil.autoWidth(28);
-            }
-            return textSizeSmall;
-        }
-
-        @Deprecated
-        public void setTextSizeSmall(int textSizeSmall) {
-            this.textSizeSmall = textSizeSmall;
+        public int getMaxScrollLine() {
+            return maxScrollLine;
         }
 
         public int getDurationScroll() {
@@ -148,154 +124,6 @@ public class DanmakuManager {
 
     private Config mConfig;
 
-    /**
-     * 用于计算弹幕位置，来保证弹幕不重叠又不浪费空间。
-     */
-    private class DanmakuPositionCalculator {
-        private int lineHeight;
-        private int parentWidth;
-        private int parentHeight;
-        List<DanmakuView> lastOnesOnEachLine = new ArrayList<>();// 保存每一行最后一个弹幕消失的时间
-        boolean[] top;
-        boolean[] bottom;
-
-        DanmakuPositionCalculator() {
-            int textSize = getConfig().getTextSizeNormal();
-            lineHeight = (int) (textSize * 1.35);
-            parentWidth = mDanmakuContainer.get().getWidth();
-            parentHeight = mDanmakuContainer.get().getHeight();
-            L.d(TAG, "DanmakuPositionCalculator: lineHeight = " + lineHeight);
-
-            int maxLine = getConfig().getMaxDanmakuLine();
-            top = new boolean[maxLine];
-            bottom = new boolean[maxLine];
-        }
-
-        int getY(DanmakuView view) {
-            switch (view.getDanmaku().mode) {
-                case scroll:
-                    return getScrollY(view);
-                case top:
-                    return getTopY(view);
-                case bottom:
-                    return getBottomY(view);
-            }
-            return -1;
-        }
-
-        int getTopY(DanmakuView view) {
-            for (int i = 0; i < top.length; i++) {
-                boolean isShowing = top[i];
-                if (!isShowing) {
-                    final int finalI = i;
-                    top[finalI] = true;
-                    view.addOnExitListener(new DanmakuView.OnExitListener() {
-                        @Override
-                        public void onExit(DanmakuView view) {
-                            top[finalI] = false;
-                        }
-                    });
-                    return i * lineHeight;
-                }
-            }
-            return -1;
-        }
-
-        int getBottomY(DanmakuView view) {
-            for (int i = 0; i < bottom.length; i++) {
-                boolean isShowing = bottom[i];
-                if (!isShowing) {
-                    final int finalI = i;
-                    bottom[finalI] = true;
-                    view.addOnExitListener(new DanmakuView.OnExitListener() {
-                        @Override
-                        public void onExit(DanmakuView view) {
-                            bottom[finalI] = false;
-                        }
-                    });
-                    return parentHeight - (i + 1) * lineHeight;
-                }
-            }
-            return -1;
-        }
-
-        int getScrollY(DanmakuView view) {
-            if (lastOnesOnEachLine.size() == 0) {
-                lastOnesOnEachLine.add(view);
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < lastOnesOnEachLine.size(); i++) {
-                DanmakuView lastOneOfThisLine = lastOnesOnEachLine.get(i);
-                int timeToDisappear = getTimeToDisappear(lastOneOfThisLine);
-                int timeToArrive = getTimeToArrive(view);
-                boolean isFullyShown = isFullyShown(lastOneOfThisLine);
-                if (timeToDisappear <= timeToArrive && isFullyShown) {
-                    // 如果最后一个弹幕在这个弹幕到达之前消失，并且最后一个字已经显示完毕，
-                    // 那么新的弹幕就可以在这一行显示
-                    lastOnesOnEachLine.set(i, view);
-                    return i * lineHeight;
-                }
-            }
-            int maxLine = getConfig().getMaxDanmakuLine();
-            if (maxLine == 0 || i < maxLine) {
-                lastOnesOnEachLine.add(view);
-                return i * lineHeight;
-            }
-
-            return -1;
-        }
-
-        /**
-         * 这条弹幕是否已经全部出来了。如果没有的话，
-         * 后面的弹幕不能出来，否则就重叠了。
-         */
-        private boolean isFullyShown(DanmakuView view) {
-            if (view == null) {
-                return true;
-            }
-            int scrollX = view.getScrollX();
-            int textLength = view.getTextLength();
-            return textLength - scrollX < parentWidth;
-        }
-
-        /**
-         * 这条弹幕还有多少毫秒彻底消失。
-         */
-        private int getTimeToDisappear(DanmakuView view) {
-            if (view == null) {
-                return 0;
-            }
-            float speed = getSpeed(view);
-            int scrollX = view.getScrollX();
-            int textLength = view.getTextLength();
-            int wayToGo = textLength - scrollX;
-            return (int) (wayToGo / speed);
-        }
-
-        /**
-         * 这条弹幕还要多少毫秒抵达屏幕边缘。
-         */
-        private int getTimeToArrive(DanmakuView view) {
-            float speed = getSpeed(view);
-            int wayToGo = parentWidth;
-            return (int) (wayToGo / speed);
-        }
-
-        /**
-         * 这条弹幕的速度。单位：px/ms
-         */
-        private float getSpeed(DanmakuView view) {
-            int textLength = view.getTextLength();
-            int width = parentWidth;
-            float s = textLength + width + 0.0f;
-            int t = getRealDisplayDuration(view.getDanmaku());// 这个时候还没有设置duration，所以不能用getDuration
-            return s / t;
-        }
-
-    }
-
     private DanmakuPositionCalculator mPositionCal;
 
     private DanmakuManager() {
@@ -311,21 +139,15 @@ public class DanmakuManager {
     /**
      * 初始化。在使用之前必须调用该方法。
      */
-    public void init(Context context) {
-        if (mInit) {
-            L.e(TAG, "init: already init");
-            return;
-        }
-
+    public void init(Context context, FrameLayout container) {
         if (mDanmakuViewPool == null) {
             mDanmakuViewPool = new DanmakuViewPool(context);
         }
+        setDanmakuContainer(container);
+        ScreenUtil.init(context);
 
-        if (!ScreenUtil.isInit()) {
-            ScreenUtil.init(context);
-        }
-
-        mInit = true;
+        mConfig = new Config();
+        mPositionCal = new DanmakuPositionCalculator(this);
     }
 
     public Config getConfig() {
@@ -337,7 +159,7 @@ public class DanmakuManager {
 
     private DanmakuPositionCalculator getPositionCalculator() {
         if (mPositionCal == null) {
-            mPositionCal = new DanmakuPositionCalculator();
+            mPositionCal = new DanmakuPositionCalculator(this);
         }
         return mPositionCal;
     }
@@ -366,10 +188,9 @@ public class DanmakuManager {
      * 设置弹幕的容器，所有的弹幕都在这里面显示
      */
     public void setDanmakuContainer(final FrameLayout root) {
-        if (mDanmakuContainer != null && mDanmakuContainer.get() != null) {
-            // TODO: 2019/3/28
+        if (root == null) {
+            throw new NullPointerException("Danmaku container cannot be null!");
         }
-
         mDanmakuContainer = new WeakReference<>(root);
         mDanmakuViewPool.setContainer(root);
     }
@@ -378,8 +199,8 @@ public class DanmakuManager {
      * 发送一条弹幕
      */
     public int send(Danmaku danmaku) {
-        if (!mInit) {
-            throw new IllegalStateException("must call init() first");
+        if (mDanmakuViewPool == null) {
+            throw new NullPointerException("Danmaku view pool is null. Did you call init() first?");
         }
 
         DanmakuView view = mDanmakuViewPool.get();
@@ -396,7 +217,7 @@ public class DanmakuManager {
         view.setDanmaku(danmaku);
 
         // 字体大小
-        int textSize = getRealTextSize(danmaku);
+        int textSize = danmaku.size;
         view.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         // 字体颜色
@@ -408,21 +229,23 @@ public class DanmakuManager {
             view.setTextColor(Color.WHITE);
         }
 
+        // 计算弹幕距离顶部的位置
         DanmakuPositionCalculator dpc = getPositionCalculator();
-        int y = dpc.getY(view);
-        if (y == -1) {
+        int marginTop = dpc.getMarginTop(view);
+//        Log.d(TAG, "send: " + marginTop);
+        if (marginTop == -1) {
             // 装不下了 丢弃
-            L.d(TAG, "send: screen is full, too many danmaku" + danmaku);
+            L.d(TAG, "send: screen is full, too many danmaku [" + danmaku + "]");
             return TOO_MANY_DANMAKU;
         }
         FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) view.getLayoutParams();
         if (p == null) {
             p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-        p.topMargin = y;
+        p.topMargin = marginTop;
         view.setLayoutParams(p);
-        view.setMinHeight((int) (getConfig().getTextSizeNormal() * 1.35));
-        view.show(mDanmakuContainer.get(), getRealDisplayDuration(danmaku));
+        view.setMinHeight((int) (getConfig().getLineHeight() * 1.35));
+        view.show(mDanmakuContainer.get(), getDisplayDuration(danmaku));
         return RESULT_OK;
     }
 
@@ -430,19 +253,10 @@ public class DanmakuManager {
         L.setEnabled(enabled);
     }
 
-    private int getRealTextSize(Danmaku danmaku) {
-        if (danmaku.textSize != null && danmaku.size== Danmaku.DEFAULT_TEXT_SIZE) {
-            Config config = getConfig();
-            return danmaku.textSize == Danmaku.TextSize.small ? config.getTextSizeSmall() : config.getTextSizeNormal();
-        }
-
-        return danmaku.size;
-    }
-
     /**
      * @return 返回这个弹幕显示时长
      */
-    private int getRealDisplayDuration(Danmaku danmaku) {
+    int getDisplayDuration(Danmaku danmaku) {
         Config config = getConfig();
         int duration;
         switch (danmaku.mode) {

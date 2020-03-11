@@ -1,6 +1,5 @@
 package top.littlefogcat.sample;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,42 +27,33 @@ public class MainActivity extends AppCompatActivity {
     private DanmakuManager mManager;
 
     private Handler mHandler = new Handler();
-    private Runnable mRandomDanmakuTask;
+    private Runnable mRandomDanmakuTask = new Runnable() {
+        @Override
+        public void run() {
+            if (!mRunning) {
+                return;
+            }
+            Danmaku danmaku = mDanmakuCreator.create();
+            mManager.send(danmaku);
+            mHandler.postDelayed(this, RandomUtil.nextInt(500, 1000));
+        }
+    };
     private DanmakuCreator mDanmakuCreator;
+
+    private boolean mRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(TAG, "onCreate: ");
         initView();
         initDanmaku();
 
         hideIme();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        Log.d(TAG, "onWindowFocusChanged: ");
-        hideStatusBar();
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void hideStatusBar() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
-    private void hideIme() {
-        Log.d(TAG, "hideIme: ");
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(mEtSend.getWindowToken(), 0);
-        }
-        hideStatusBar();
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         mContainer = findViewById(R.id.danmakuContainer);
         mEtSend = findViewById(R.id.etSend);
@@ -71,23 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
         mBtnRandom.setOnClickListener(v -> {
             if (mBtnRandom.getText().toString().startsWith("开始")) {
+                mRunning = true;
                 mHandler.post(mRandomDanmakuTask);
                 mBtnRandom.setText(R.string.stop_random_danmaku);
             } else {
-                mHandler.removeCallbacksAndMessages(null);
+                mRunning = false;
                 mBtnRandom.setText(R.string.start_random_danmaku);
             }
         });
-        mRandomDanmakuTask = new Runnable() {
-            @Override
-            public void run() {
-                Danmaku danmaku = mDanmakuCreator.create();
-                if (!mPause) {
-                    mManager.send(danmaku);
-                }
-                mHandler.postDelayed(this, RandomUtil.nextInt(500, 1000));
-            }
-        };
 
         mEtSend.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -109,34 +90,47 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化一些参数
+     */
     private void initDanmaku() {
         mManager = DanmakuManager.getInstance();
-        mManager.init(this); // 必须调用init方法
+        mManager.init(this, mContainer); // 必须首先调用init方法
         mManager.setLogEnabled(true); // 设置打开日志
-        mManager.setDanmakuContainer(mContainer); // 设置弹幕容器，必须是FrameLayout
         mManager.setMaxDanmakuSize(120); // 设置同屏最大弹幕数
 
         DanmakuManager.Config config = mManager.getConfig(); // 弹幕相关设置
+        boolean isPortrait = ScreenUtil.getScreenHeight() > ScreenUtil.getScreenWidth();
         config.setDurationTop(5000); // 设置顶部弹幕显示时长，默认6秒
-        config.setDurationScroll(5000); // 设置滚动字幕显示时长，默认10秒
+        config.setDurationScroll(isPortrait ? 5000 : 10000); // 设置滚动字幕显示时长，默认10秒
         config.setMaxScrollLine(12); // 设置滚动字幕最大行数
-        config.setTextSizeNormal(ScreenUtil.autoWidth(40)); // 设置标准弹幕字体大小
-        config.setTextSizeSmall(ScreenUtil.autoWidth(28)); // 设置小弹幕字体大小
+        config.setLineHeight(ScreenUtil.autoSize(isPortrait ? 40 : 60)); // 设置行高
 
         mDanmakuCreator = new DanmakuCreator(this);
     }
 
-    private boolean mPause;
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        mPause = false;
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        hideStatusBar();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void hideStatusBar() {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    private void hideIme() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(mEtSend.getWindowToken(), 0);
+        }
+        hideStatusBar();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mPause = true;
+        mRunning = false;
     }
 }

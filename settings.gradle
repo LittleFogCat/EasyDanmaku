@@ -1,1 +1,1 @@
-include ':danmakulib', ':sample', ':sample2'
+include ':danmakulib', ':sample'

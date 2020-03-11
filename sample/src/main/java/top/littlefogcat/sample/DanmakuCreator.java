@@ -1,6 +1,7 @@
 package top.littlefogcat.sample;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,9 +40,12 @@ public class DanmakuCreator {
         danmaku.text = randomText();
         danmaku.mode = Danmaku.Mode.scroll;
         danmaku.color = randomColor();
-        danmaku.size = ScreenUtil.autoWidth(28);
+        danmaku.size = ScreenUtil.autoSize(56, 36);
+
         return danmaku;
     }
+
+    private static final String TAG = "DanmakuCreator";
 
     private String randomText() {
         int length = (int) (26 - Math.sqrt(RandomUtil.nextInt(625)));

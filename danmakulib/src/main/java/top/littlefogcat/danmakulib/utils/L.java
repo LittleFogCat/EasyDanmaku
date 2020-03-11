@@ -6,7 +6,7 @@ import android.util.Log;
  * Created by LittleFogCat.
  */
 public class L {
-    private static boolean sEnabled = false;
+    private static boolean sEnabled = true;
 
     public static void setEnabled(boolean enabled) {
         sEnabled = enabled;
@@ -39,6 +39,16 @@ public class L {
     public static void e(String tag, String msg) {
         if (sEnabled) {
             Log.e(tag, msg);
+        }
+    }
+
+    public static void d(String tag, Object... args) {
+        if (sEnabled) {
+            StringBuilder msg = new StringBuilder();
+            for (Object arg : args) {
+                msg.append(arg).append(" ");
+            }
+            Log.d(tag, msg.toString());
         }
     }
 }
