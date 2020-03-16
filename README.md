@@ -1,6 +1,8 @@
 # EasyDanmaku
 一个方便简单的Android弹幕控件，顾名思义so easy。
 
+[ ![Download](https://api.bintray.com/packages/littlefogcat/maven/easydanmaku/images/download.svg) ](https://bintray.com/littlefogcat/maven/easydanmaku/_latestVersion)
+
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif)
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif)
 
