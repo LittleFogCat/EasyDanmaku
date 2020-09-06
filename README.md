@@ -6,6 +6,8 @@
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif)
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif)
 
+
+**特性：**
 - 原理简单，其实就是用TextView+动画实现的，纯java实现，方便修改和扩展；
 - 体积小，占用资源少，运行流畅，实测在同屏100个弹幕的情况下占的资源和[B站的弹幕库](https://github.com/bilibili/DanmakuFlameMaster)相差无几；
 - 使用方便，仅用几行代码即可完成弹幕发送；
@@ -16,6 +18,8 @@ Gradle:
 ```
 implementation 'top.littlefogcat.easydanmaku:easydanmaku:0.1.3'
 ```
+
+或者直接下载复制进项目
 
 ## 1. 用法两部曲
 ### 1.1 在布局中引入一个FrameLayout作为弹幕容器
