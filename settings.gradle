@@ -1,1 +1,3 @@
-include ':easydanmaku', ':sample'
+include ':obsolete', ':sample'
+include ':easydanmaku'
+include ':surfaceuisystem'

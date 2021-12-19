@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion compile_sdk_version
 
     defaultConfig {
-        applicationId "top.littlefogcat.sample"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        applicationId "top.littlefogcat.easydanmaku.sample"
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode version_code
+        versionName version_name
     }
 
     buildTypes {
@@ -17,16 +18,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
-
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation project(path: ':easydanmaku')
+    implementation "androidx.core:core-ktx:$androidx_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$junitx_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+}
+repositories {
+    mavenCentral()
 }

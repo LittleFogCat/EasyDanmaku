@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:clickable="true"
+    android:focusable="true">
+
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center" />
+
+    <top.littlefogcat.easydanmaku.ui.DanmakuView
+        android:id="@+id/dmView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/interactives"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="#333"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/etSend"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:background="@drawable/main_et_send_danmaku_bg"
+                android:gravity="center_vertical"
+                android:hint="@string/send_danmaku"
+                android:imeActionId="100"
+                android:imeActionLabel="发射"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:textColorHint="#999"
+                android:textSize="14sp" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btnStartRandom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="56dp"
+            android:background="#333"
+            android:padding="8dp"
+            android:text="@string/start_random_danmaku"
+            android:textColor="#fff"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</RelativeLayout>

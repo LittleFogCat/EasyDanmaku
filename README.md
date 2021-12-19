@@ -1,50 +1,58 @@
 # EasyDanmaku
-一个方便简单的Android弹幕控件，顾名思义so easy。
 
-[ ![Download](https://api.bintray.com/packages/littlefogcat/maven/easydanmaku/images/download.svg) ](https://bintray.com/littlefogcat/maven/easydanmaku/_latestVersion)
+一个方便简单的Android弹幕控件，顾名思义so easy。
 
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif)
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif)
 
-- 原理简单，其实就是用TextView+动画实现的，纯java实现，方便修改和扩展；
-- 体积小，占用资源少，运行流畅，实测在同屏100个弹幕的情况下占的资源和[B站的弹幕库](https://github.com/bilibili/DanmakuFlameMaster)相差无几；
-- 使用方便，仅用几行代码即可完成弹幕发送；
+## 1. 用法
 
-## 0. 导入
+### 1.1 在布局中引入一个DanmakuView
 
-Gradle:
-```
-implementation 'top.littlefogcat.easydanmaku:easydanmaku:0.1.3'
-```
+```html
 
-## 1. 用法两部曲
-### 1.1 在布局中引入一个FrameLayout作为弹幕容器
-```xml
-    <FrameLayout
+<top.littlefogcat.easydanmaku.ui.DanmakuView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 ```
 
-### 1.2 代码中使用
-```java
-    // 获得DanmakuManager单例
-    DanmakuManager dm = DanmakuManager.getInstance();
-    
-    // 设置一个FrameLayout为弹幕容器
-    FrameLayout container = findViewById(R.id.container);
-    dm.setDanmakuContainer(container);
-   
-    // 发送弹幕
-    Danmaku danmaku = new Danmaku();
-    danmaku.text = "666"; 
-    dm.send(danmaku);
+### 1.2 设置数据
+
+```kotlin
+val danmakuView: DanmakuView = findView()
+val danmakus: Collection<DanmakuItem> = getDanmakus()
+danmakuView.setDanmakus(danmakus)
+```
+
+### 1.3 通过设置时间更新弹幕
+
+DanmakuView使用子线程绘制，根据时间确定当前弹幕。在设置弹幕数据之后，只需设置时间即可刷新界面。
+
+通过`setActionOnFrame`设置每一帧的动作，在其中更新时间，即可刷新界面。当然，自定义Timer固定时间刷新也是可以的。
+
+```kotlin
+// 使用setActionOnFrame刷新界面
+danmakuView.setActionOnFrame {
+    val progress = getVideoProgress() // 获取播放进度
+    danmakuView.time = progress
+}
+
+// 或者使用Timer
+timer(initialDelay = 0L, period = 16L) {
+    val progress = getVideoProgress()
+    danmakuView.time = progress
+}
 ```
 
 **就是这么easy**
 
-
 ## 2. changelog
+
+**EasyDanmaku v0.2.0**
+
+- 使用kotlin全部重写；
+- 使用SurfaceView重新实现；
 
 **EasyDanmaku v0.1.3**
 
@@ -60,14 +68,12 @@ implementation 'top.littlefogcat.easydanmaku:easydanmaku:0.1.3'
 - 修改了字体大小的设置方式；
 - 其他的一些优化。
 
-
 **EasyDanmaku v0.1.0**
 
 - 重写了DanmakuView。
 - 优化结构，去除冗余类。
 - 修复弹幕过长导致显示内容不完整的问题。
 - 加入顶部和底部弹幕。
-
 
 **EasyDanmaku v0.0.0**
 

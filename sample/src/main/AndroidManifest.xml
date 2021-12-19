@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="top.littlefogcat.sample">
+    package="top.littlefogcat.easydanmaku.example">
 
     <application
         android:allowBackup="true"
@@ -12,13 +12,28 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="top.littlefogcat.sample.MainActivity"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
+            android:name="top.littlefogcat.easydanmaku.example.MainActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="top.littlefogcat.easydanmaku.example.plain.EsusActivity"
+            android:exported="true"
+            android:screenOrientation="reverseLandscape">
+
+        </activity>
+        <activity
+            android:name="top.littlefogcat.easydanmaku.example.SampleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="reverseLandscape"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
+
         </activity>
     </application>
 
