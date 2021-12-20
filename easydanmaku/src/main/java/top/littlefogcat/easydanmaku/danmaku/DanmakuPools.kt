@@ -4,7 +4,6 @@ import androidx.core.util.Pools
 import top.littlefogcat.easydanmaku.Danmakus
 import java.util.NoSuchElementException
 
-@Suppress("UNCHECKED_CAST")
 object DanmakuPools {
     var size = 0
         private set

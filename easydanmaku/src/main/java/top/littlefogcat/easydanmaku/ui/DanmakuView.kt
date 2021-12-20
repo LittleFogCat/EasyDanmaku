@@ -120,6 +120,13 @@ class DanmakuView : EsusSurfaceView, IDanmakuView {
         rootView.setVisibility(if (show) View.VISIBLE else View.GONE)
     }
 
+    /**
+     * TODO 会有一定概率被discard，自己发送的需要提高优先级
+     */
+    override fun sendDanmaku(danmaku: Danmaku) {
+        super.sendDanmaku(danmaku)
+    }
+
     override fun addDanmaku(danmaku: Danmaku) {
         rootView.addView(danmaku)
     }

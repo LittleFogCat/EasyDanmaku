@@ -1,7 +1,7 @@
 package top.littlefogcat.easydanmaku.util
 
 import android.util.Log
-import top.littlefogcat.esus.BuildConfig
+import top.littlefogcat.easydanmaku.BuildConfig
 
 /**
  * @author littlefogcat
