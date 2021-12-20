@@ -2,6 +2,8 @@
 
 一个方便简单的Android弹幕控件，顾名思义so easy。
 
+**注意！**本库尚未完善，仅供共同学习进步，勿要用在正式项目！
+
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme2.gif)
 ![Easy Danmaku.gif](https://github.com/LittleFogCat/EasyDanmaku/blob/master/readme1.gif)
 
@@ -49,7 +51,7 @@ timer(initialDelay = 0L, period = 16L) {
 
 ## 2. changelog
 
-**EasyDanmaku v0.2.0**
+**EasyDanmaku v0.2.0 - 2021.12.20**
 
 - 使用kotlin全部重写；
 - 使用SurfaceView重新实现；
