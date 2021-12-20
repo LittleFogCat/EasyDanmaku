@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="top.littlefogcat.easydanmaku.example">
+    package="top.littlefogcat.easydanmaku.sample">
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="top.littlefogcat.easydanmaku.example.MainActivity"
+            android:name="top.littlefogcat.easydanmaku.sample.MainActivity"
             android:exported="true">
 
             <intent-filter>
@@ -22,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="top.littlefogcat.easydanmaku.example.plain.EsusActivity"
+            android:name="top.littlefogcat.easydanmaku.sample.pressuretest.PressureTestActivity"
             android:exported="true"
-            android:screenOrientation="reverseLandscape">
+            android:screenOrientation="userLandscape">
 
         </activity>
         <activity
-            android:name="top.littlefogcat.easydanmaku.example.SampleActivity"
+            android:name="top.littlefogcat.easydanmaku.sample.sample.SampleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="reverseLandscape"
+            android:screenOrientation="userLandscape"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
 
         </activity>

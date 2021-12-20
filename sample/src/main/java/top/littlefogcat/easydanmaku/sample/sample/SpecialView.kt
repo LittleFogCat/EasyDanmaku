@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example.plain.views
+package top.littlefogcat.easydanmaku.sample.sample
 
 import android.graphics.Camera
 import android.graphics.Canvas

@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example.util
+package top.littlefogcat.easydanmaku.sample.util
 
 import android.app.Activity
 import android.util.DisplayMetrics

@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example
+package top.littlefogcat.easydanmaku.sample.sample
 
 import android.os.Bundle
 import android.view.View
@@ -7,17 +7,19 @@ import android.widget.TextView
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import top.littlefogcat.easydanmaku.Danmakus
-import top.littlefogcat.easydanmaku.example.util.ScreenSize
+import top.littlefogcat.easydanmaku.sample.DanmakuLoader
+import top.littlefogcat.easydanmaku.sample.R
+import top.littlefogcat.easydanmaku.sample.util.ScreenSize
 import top.littlefogcat.easydanmaku.ui.DanmakuView
 import top.littlefogcat.easydanmaku.util.EzLog
 import top.littlefogcat.esus.view.util.Timing
 
 class SampleActivity : AppCompatActivity() {
 
-    lateinit var danmakuView: DanmakuView
-    lateinit var videoView: VideoView
-    lateinit var etMessage: EditText
-    lateinit var btnStartRandom: TextView
+    internal val danmakuView: DanmakuView by lazy { findViewById(R.id.dmView) }
+    internal val videoView: VideoView by lazy { findViewById(R.id.video) }
+    internal val etMessage: EditText by lazy { findViewById(R.id.etSend) }
+    internal val btnStartRandom: TextView by lazy { findViewById(R.id.btnStartRandom) }
 
     private val delegate = UIDelegate(this)
 

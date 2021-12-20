@@ -1,9 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+boolean sgn = false
+File signFile = file("sign.config.gradle")
+if (signFile.exists()) {
+    apply from: signFile
+    sgn = true
+}
+
 android {
     compileSdkVersion compile_sdk_version
-
     defaultConfig {
         applicationId "top.littlefogcat.easydanmaku.sample"
         minSdkVersion min_sdk_version
@@ -12,16 +18,23 @@ android {
         versionName version_name
     }
 
+    if (sgn) signingConfigs(signConfig)
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (sgn) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
 
+project.dependencies {
+    add("api", project(path: ':easydanmaku'))
+}
+
 dependencies {
-    implementation project(path: ':easydanmaku')
     implementation "androidx.core:core-ktx:$androidx_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 

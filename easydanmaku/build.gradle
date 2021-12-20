@@ -25,7 +25,6 @@ android {
 }
 
 dependencies {
-    api project(":surfaceuisystem")
     implementation "androidx.core:core-ktx:$androidx_version"
 
     testImplementation "junit:junit:$junit_version"

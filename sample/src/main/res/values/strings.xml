@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sample</string>
+    <string name="app_name">EasyDanmakuSample</string>
     <string name="send">发送</string>
     <string name="hint_et_send_danmaku">在此输入要发送的内容</string>
     <string name="start_random_danmaku">开始随机发送弹幕</string>

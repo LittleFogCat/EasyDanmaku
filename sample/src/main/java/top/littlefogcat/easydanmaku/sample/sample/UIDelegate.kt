@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example
+package top.littlefogcat.easydanmaku.sample.sample
 
 import android.graphics.Color
 import android.os.Handler
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import top.littlefogcat.easydanmaku.danmaku.Danmaku
 import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
 import top.littlefogcat.easydanmaku.danmaku.RLDanmaku
+import top.littlefogcat.easydanmaku.sample.R
 import top.littlefogcat.easydanmaku.ui.DanmakuView
 import top.littlefogcat.easydanmaku.util.TAG
 
@@ -26,28 +27,12 @@ import top.littlefogcat.easydanmaku.util.TAG
  */
 class UIDelegate(private val activity: SampleActivity) {
 
-    private var btnStartRandom: TextView
-        get() = activity.btnStartRandom
-        set(value) {
-            activity.btnStartRandom = value
-        }
-    private var etMessage: EditText
-        get() = activity.etMessage
-        set(value) {
-            activity.etMessage = value
-        }
-    private var videoView: VideoView
-        get() = activity.videoView
-        set(value) {
-            activity.videoView = value
-        }
-    private var danmakuView: DanmakuView
-        get() = activity.danmakuView
-        set(value) {
-            activity.danmakuView = value
-        }
-    private lateinit var rootView: View
-    private lateinit var bottomLayout: View
+    private val btnStartRandom: TextView get() = activity.btnStartRandom
+    private val etMessage: EditText get() = activity.etMessage
+    private val videoView: VideoView get() = activity.videoView
+    private val danmakuView: DanmakuView get() = activity.danmakuView
+    private val rootView: View by lazy { activity.findViewById(R.id.root) }
+    private val bottomLayout: View by lazy { activity.findViewById(R.id.bottomLayout) }
     private val handler = Handler(Looper.getMainLooper())
     private var isRandomSending: Boolean = false
     private val sendDanmakuTask = object : Runnable {
@@ -58,19 +43,7 @@ class UIDelegate(private val activity: SampleActivity) {
     }
 
     fun initializeUI() {
-        findViews()
         initialize()
-    }
-
-    private fun findViews() {
-        activity.apply {
-            videoView = findViewById(R.id.video)
-            danmakuView = findViewById(R.id.dmView)
-            btnStartRandom = findViewById(R.id.btnStartRandom)
-            etMessage = findViewById(R.id.etSend)
-            rootView = findViewById(R.id.root)
-            bottomLayout = findViewById(R.id.bottomLayout)
-        }
     }
 
     private fun initialize() {

@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example
+package top.littlefogcat.easydanmaku.sample
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,24 +7,19 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.TextView
-import top.littlefogcat.easydanmaku.example.plain.EsusActivity
+import top.littlefogcat.easydanmaku.sample.pressuretest.PressureTestActivity
+import top.littlefogcat.easydanmaku.sample.sample.SampleActivity
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btnExample: Button
-    lateinit var btnPressure: Button
-    lateinit var seekBar: SeekBar
-    lateinit var tvPressure: TextView
-    lateinit var cbStroke: CheckBox
+    private val btnExample: Button by lazy { findViewById(R.id.btnExample) }
+    private val btnPressure: Button by lazy { findViewById(R.id.btnPressure) }
+    private val seekBar: SeekBar by lazy { findViewById(R.id.seekBar) }
+    private val tvPressure: TextView by lazy { findViewById(R.id.tvPressure) }
+    private val cbStroke: CheckBox by lazy { findViewById(R.id.cbStroke) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        btnExample = findViewById(R.id.btnExample)
-        btnPressure = findViewById(R.id.btnPressure)
-        seekBar = findViewById(R.id.seekBar)
-        tvPressure = findViewById(R.id.tvPressure)
-        cbStroke = findViewById(R.id.cbStroke)
 
         btnExample.setOnClickListener {
             startActivity(Intent(this, SampleActivity::class.java))
@@ -32,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         btnPressure.setOnClickListener {
             val size = f(seekBar.progress).toInt()
-            val i = Intent(this, EsusActivity::class.java)
+            val i = Intent(this, PressureTestActivity::class.java)
             i.putExtra("size", size)
             i.putExtra("stroke", cbStroke.isChecked)
             startActivity(i)
@@ -40,7 +35,8 @@ class MainActivity : AppCompatActivity() {
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvPressure.text = "size: " + f(progress).toInt()
+                val text = "size: " + f(progress).toInt()
+                tvPressure.text = text
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

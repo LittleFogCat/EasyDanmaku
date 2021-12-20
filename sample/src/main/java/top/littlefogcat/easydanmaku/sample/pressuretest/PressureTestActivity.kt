@@ -1,15 +1,15 @@
-package top.littlefogcat.easydanmaku.example.plain
+package top.littlefogcat.easydanmaku.sample.pressuretest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import top.littlefogcat.easydanmaku.example.R
-import top.littlefogcat.easydanmaku.example.plain.views.Surface
+import top.littlefogcat.easydanmaku.sample.R
+import top.littlefogcat.easydanmaku.sample.sample.Surface
 import top.littlefogcat.esus.view.util.Timing
 
 /**
- * 使用EsusSurfaceView
+ * 使用EsusSurfaceView进行压力测试
  */
-class EsusActivity : AppCompatActivity() {
+class PressureTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.plain_activity)

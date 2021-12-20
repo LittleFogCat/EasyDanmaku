@@ -1,10 +1,8 @@
-package top.littlefogcat.easydanmaku.example.plain.views
+package top.littlefogcat.easydanmaku.sample.views
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.SystemClock
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.esus.view.View
 import top.littlefogcat.esus.view.ViewParent
 import top.littlefogcat.esus.view.util.FPS
 import top.littlefogcat.esus.view.util.Timing
@@ -28,7 +26,7 @@ class RootView : FrameLayout() {
     }
 
     override fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
-        val text = " FPS: ${fps}, current: $childCount, frame render: ${Timing.lastFrameTime}ms "
+        val text = " FPS: ${fps}, current: $childCount, frameTime: ${Timing.lastFrameTime}ms "
 
         val l = 100f
         val r = 100f + paint.measureText(text)

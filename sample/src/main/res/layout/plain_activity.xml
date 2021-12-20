@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".plain.EsusActivity">
+    tools:context=".pressuretest.PressureTestActivity">
 
-    <top.littlefogcat.easydanmaku.example.plain.views.Surface
+    <top.littlefogcat.easydanmaku.sample.sample.Surface
         android:id="@+id/surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

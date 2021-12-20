@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example.plain.views
+package top.littlefogcat.easydanmaku.sample.views
 
 import android.graphics.Canvas
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.example
+package top.littlefogcat.easydanmaku.sample
 
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory

@@ -1,11 +1,13 @@
-package top.littlefogcat.easydanmaku.example.plain.views
+package top.littlefogcat.easydanmaku.sample.sample
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceHolder
-import top.littlefogcat.easydanmaku.example.GlobalValues
+import top.littlefogcat.easydanmaku.sample.GlobalValues
+import top.littlefogcat.easydanmaku.sample.views.RootView
+import top.littlefogcat.easydanmaku.sample.views.ScrollingTextView
 import top.littlefogcat.esus.EsusSurfaceView
 import top.littlefogcat.esus.view.TouchEvent
 import top.littlefogcat.esus.view.ViewGroup
