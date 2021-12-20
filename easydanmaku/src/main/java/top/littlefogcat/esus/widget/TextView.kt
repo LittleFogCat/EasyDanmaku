@@ -14,7 +14,7 @@ import top.littlefogcat.esus.view.ViewParent
  */
 open class TextView() : View() {
 
-    var text = ""
+    var text: CharSequence = ""
         set(value) {
             field = value
             requestLayout()
@@ -28,7 +28,7 @@ open class TextView() : View() {
     override val paint = TextPaint(super.paint)
     protected var boring: BoringLayout.Metrics? = null
 
-    constructor(text: String) : this() {
+    constructor(text: CharSequence) : this() {
         this.text = text
     }
 
@@ -58,7 +58,7 @@ open class TextView() : View() {
         paint.color = textColor or opacityMask
         paint.style = Paint.Style.FILL
         paint.textSize = textSize
-        canvas.drawText(text, x, y, paint)
+        canvas.drawText(text, 0, text.length, x, y, paint)
     }
 
     override fun toString(): String {

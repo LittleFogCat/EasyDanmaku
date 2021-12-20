@@ -3,7 +3,6 @@ package top.littlefogcat.easydanmaku.sample.pressuretest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import top.littlefogcat.easydanmaku.sample.R
-import top.littlefogcat.easydanmaku.sample.sample.Surface
 import top.littlefogcat.esus.view.util.Timing
 
 /**

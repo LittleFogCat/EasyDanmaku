@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".pressuretest.PressureTestActivity">
 
-    <top.littlefogcat.easydanmaku.sample.sample.Surface
+    <top.littlefogcat.easydanmaku.sample.pressuretest.Surface
         android:id="@+id/surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

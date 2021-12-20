@@ -80,7 +80,7 @@ import top.littlefogcat.esus.view.util.Timing
  */
 @Suppress("unused", "ProtectedInFinal", "FoldInitializerAndIfToElvis")
 class ViewRootImpl(
-    private val surface: ISurface,
+    val surface: ISurface,
     private var mode: Int = MODE_CHOREOGRAPHER, // todo
     private val useHardwareAccelerateIfPossible: Boolean = true,
 ) : ViewParent {

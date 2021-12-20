@@ -326,4 +326,11 @@ open class View {
         return flags and VISIBILITY_MASK
     }
 
+    fun getSurface(): ISurface? {
+        val root = attachInfo?.rootView?.parent
+        if (root is ViewRootImpl) {
+            return root.surface
+        }
+        return null
+    }
 }

@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.sample.views
+package top.littlefogcat.easydanmaku.sample.pressuretest
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,7 +12,7 @@ import kotlin.random.Random
  * @author littlefogcat
  * @email littlefogcat@foxmail.com
  */
-class ScrollingTextView(text: String, x: Int, y: Int) :
+class ScrollingTextView(text: CharSequence, x: Int, y: Int) :
     TextView(text) {
     private val speed: Float
     private var stroke = false
@@ -43,7 +43,7 @@ class ScrollingTextView(text: String, x: Int, y: Int) :
             paint.style = Paint.Style.STROKE
             paint.textSize = textSize
             paint.strokeWidth = 3f
-            canvas.drawText(text, x, y, paint)
+            canvas.drawText(text, 0, text.length, x, y, paint)
         }
 
         super.onDraw(canvas, parent, time)
