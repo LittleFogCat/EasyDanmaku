@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
  * 自动适配屏幕像素的工具类。
  * 需要先调用{@link ScreenUtil#init(Context)}才能正常使用。如果屏幕旋转，
  * 那么需要再次调用{@link ScreenUtil#init(Context)}以更新。
+ * @deprecated Do not use this module
  */
 
 @SuppressWarnings({"unused", "WeakerAccess", "SuspiciousNameCombination"})

@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 用于计算弹幕位置，来保证弹幕不重叠又不浪费空间。
+ * @deprecated Do not use this module
  */
 class DanmakuPositionCalculator {
     private static final String TAG = "DanPositionCalculator";

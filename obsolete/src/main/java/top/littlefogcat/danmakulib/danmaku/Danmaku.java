@@ -2,6 +2,7 @@ package top.littlefogcat.danmakulib.danmaku;
 
 /**
  * Created by LittleFogCat.
+ * @deprecated Do not use this module
  */
 
 public class Danmaku {

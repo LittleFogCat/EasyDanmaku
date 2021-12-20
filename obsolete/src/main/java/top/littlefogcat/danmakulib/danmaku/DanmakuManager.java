@@ -18,6 +18,7 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  * dm.show(new Danmaku("test"));
  * <p>
  * Created by LittleFogCat.
+ * @deprecated Do not use this module
  */
 @SuppressWarnings("unused")
 public class DanmakuManager {

@@ -5,6 +5,7 @@ import android.util.Log
 /**
  * Created by LittleFogCat.
  */
+@Deprecated("DO NOT USE THIS MODULE")
 object EasyL {
     private var sEnabled = false
 

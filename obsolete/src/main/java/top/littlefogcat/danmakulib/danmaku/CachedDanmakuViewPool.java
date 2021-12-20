@@ -11,6 +11,7 @@ import top.littlefogcat.danmakulib.utils.EasyL;
 
 /**
  * 一个简化版的DanmakuViewPool
+ * @deprecated Do not use this module
  */
 public class CachedDanmakuViewPool implements Pool<DanmakuView> {
     private static final String TAG = "CachedDanmakuViewPool";

@@ -20,7 +20,7 @@ import top.littlefogcat.danmakulib.utils.ScreenUtil;
  * <p>
  * Created by LittleFogCat.
  *
- * @deprecated Do not use this package
+ * @deprecated Do not use this module
  */
 @SuppressWarnings("unused")
 @Deprecated()

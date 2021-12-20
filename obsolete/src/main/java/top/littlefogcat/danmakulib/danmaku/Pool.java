@@ -3,6 +3,7 @@ package top.littlefogcat.danmakulib.danmaku;
 /**
  * 一个对象池
  * Created by LittleFogCat.
+ * @deprecated Do not use this module
  */
 public interface Pool<T> {
     /**

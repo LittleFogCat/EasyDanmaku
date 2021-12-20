@@ -9,6 +9,7 @@ import top.littlefogcat.danmakulib.R;
 
 /**
  * Created by LittleFogCat.
+ * @deprecated Do not use this module
  */
 class DanmakuViewFactory {
     @SuppressLint("InflateParams")
