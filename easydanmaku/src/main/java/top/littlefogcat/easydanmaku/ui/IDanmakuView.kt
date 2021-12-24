@@ -2,8 +2,8 @@ package top.littlefogcat.easydanmaku.ui
 
 import android.graphics.Rect
 import android.widget.MediaController
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 
 /**
  * DanmakuView 对外接口 定义了DanmakuView需要实现的功能。

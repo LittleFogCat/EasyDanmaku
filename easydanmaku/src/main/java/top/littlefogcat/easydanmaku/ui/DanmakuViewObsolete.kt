@@ -8,9 +8,8 @@ import android.view.SurfaceView
 import android.widget.MediaController
 import top.littlefogcat.easydanmaku.Danmakus
 import top.littlefogcat.easydanmaku.R
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
-import top.littlefogcat.easydanmaku.danmaku.RLDanmaku
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.easydanmaku.util.Progress
 import top.littlefogcat.esus.view.ISurface
 import top.littlefogcat.esus.view.View

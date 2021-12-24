@@ -1,6 +1,6 @@
 package top.littlefogcat.easydanmaku.util
 
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
 
 /**
  * 区间树，作用是查找不重叠弹幕位置。

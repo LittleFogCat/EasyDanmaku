@@ -51,7 +51,7 @@ class SampleActivity : AppCompatActivity() {
         option.antiCoverEnabled = true
 
         // Set base text size
-        Danmakus.Global.baseTextSize = ScreenSize.of(this).height / 17.2f
+        Danmakus.Globals.baseTextSize = ScreenSize.of(this).height / 17.2f
 
         // Show FPS
         danmakuView.setShowFPS(true)

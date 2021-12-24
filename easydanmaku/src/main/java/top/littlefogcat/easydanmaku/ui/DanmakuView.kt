@@ -6,8 +6,8 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.Choreographer
 import top.littlefogcat.easydanmaku.Danmakus
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.esus.EsusSurfaceView
 import top.littlefogcat.esus.view.View
 import top.littlefogcat.esus.view.util.Timing

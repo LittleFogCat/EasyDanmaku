@@ -1,11 +1,11 @@
-package top.littlefogcat.easydanmaku.danmaku
+package top.littlefogcat.easydanmaku.danmakus.views
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
-import android.util.Log
 import top.littlefogcat.easydanmaku.Danmakus
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.esus.view.ViewGroup
 import top.littlefogcat.esus.view.ViewParent
 import top.littlefogcat.esus.widget.TextView
@@ -14,14 +14,8 @@ import top.littlefogcat.esus.widget.TextView
  * 定义弹幕实体应该实现的功能。
  * Defines the functions that Danmaku entity should implement.
  *
- * 字体大小是根据3个参数决定的：
- * 1. [textScale]：弹幕本身缩放比例，为固定值，在发送时确定，普通弹幕为1；
- * 2. [Danmakus.Global.baseTextSize]：基准字体大小，该参数由应用根据实际情况决定；
- * 3. [Danmakus.Options.textScale]：该参数为用户设定缩放值，默认为1；
  *
- * 最终字体大小为以上3个参数相乘。
- *
- * @param textScale Inherit text scale.
+ * @param item Inherit properties of this danmaku.
  *
  * @author littlefogcat
  * @email littlefogcat@foxmail.com
@@ -65,7 +59,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
             if (value != null) {
                 text = value.text
                 textColor = value.color
-                textSize = Danmakus.Global.baseTextSize * Danmakus.Options.textScale * value.textScale
+                textSize = Danmakus.Globals.baseTextSize * Danmakus.Options.textScale * value.textScale
             }
             field = value
         }
@@ -100,7 +94,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
 
     /* ===================== declared members ===================== */
 
-    override val paint: TextPaint = Danmakus.Global.paint
+    override val paint: TextPaint = Danmakus.Globals.paint
 
     /** use for danmaku pool **/
     var next: Danmaku? = null @JvmName("setNext") internal set
@@ -138,7 +132,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 4f
         paint.textSize = textSize
-        canvas.drawText(text, x, y, paint)
+        canvas.drawText(text, 0, text.length, x, y, paint)
         super.onDraw(canvas, parent, time)
         if (!more && parent is ViewGroup) {
             parent.removeView(this)

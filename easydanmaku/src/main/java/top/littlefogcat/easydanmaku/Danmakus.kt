@@ -3,7 +3,7 @@ package top.littlefogcat.easydanmaku
 import android.graphics.Color
 import android.graphics.Paint
 import android.text.TextPaint
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
 import top.littlefogcat.easydanmaku.ui.IDanmakuView
 
 /**
@@ -16,14 +16,22 @@ import top.littlefogcat.easydanmaku.ui.IDanmakuView
  */
 object Danmakus {
 
+    /**
+     *  For Java use
+     *  @see Options
+     */
     @JvmStatic
-    fun getOption(): Options {
+    fun options(): Options {
         return Options
     }
 
+    /**
+     *  For Java use
+     *  @see Globals
+     */
     @JvmStatic
-    fun getGlobals(): Global {
-        return Global
+    fun globals(): Globals {
+        return Globals
     }
 
     /**
@@ -91,7 +99,7 @@ object Danmakus {
         /**
          * Text scale value. This value can be changed by user.
          *
-         * @see Global.baseTextSize
+         * @see Globals.baseTextSize
          * @see Danmaku.textScale
          * @see IDanmakuView.setTextScale
          */
@@ -110,7 +118,7 @@ object Danmakus {
     /**
      * 一些全局值。
      */
-    object Global {
+    object Globals {
 
         /**
          * Global paint to draw danmakus.

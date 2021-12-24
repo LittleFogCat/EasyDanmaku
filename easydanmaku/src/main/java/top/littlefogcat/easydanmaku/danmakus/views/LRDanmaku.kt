@@ -1,5 +1,6 @@
-package top.littlefogcat.easydanmaku.danmaku
+package top.littlefogcat.easydanmaku.danmakus.views
 
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.esus.view.ViewGroup
 
 /**

@@ -2,8 +2,8 @@ package top.littlefogcat.easydanmaku.sample
 
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*

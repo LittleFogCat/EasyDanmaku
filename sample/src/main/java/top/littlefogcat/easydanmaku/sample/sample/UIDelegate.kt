@@ -14,9 +14,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
-import top.littlefogcat.easydanmaku.danmaku.Danmaku
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
-import top.littlefogcat.easydanmaku.danmaku.RLDanmaku
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.views.RLDanmaku
 import top.littlefogcat.easydanmaku.sample.R
 import top.littlefogcat.easydanmaku.ui.DanmakuView
 import top.littlefogcat.easydanmaku.util.TAG

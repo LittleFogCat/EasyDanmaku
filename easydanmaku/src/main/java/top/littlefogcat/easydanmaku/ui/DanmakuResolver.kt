@@ -1,6 +1,6 @@
 package top.littlefogcat.easydanmaku.ui
 
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 
 /**
  * Resolves the danmaku list.

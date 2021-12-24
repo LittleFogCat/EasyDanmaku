@@ -4,15 +4,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.SystemClock
-import android.util.Log
 import top.littlefogcat.easydanmaku.Danmakus
-import top.littlefogcat.easydanmaku.danmaku.*
-import top.littlefogcat.easydanmaku.util.EzLog
+import top.littlefogcat.easydanmaku.danmakus.*
+import top.littlefogcat.easydanmaku.danmakus.views.*
 import top.littlefogcat.easydanmaku.util.IntervalList
 import top.littlefogcat.esus.view.View
 import top.littlefogcat.esus.view.ViewGroup
 import top.littlefogcat.esus.view.ViewParent
-import top.littlefogcat.esus.view.util.EsusLog
 import top.littlefogcat.esus.view.util.FPS
 import top.littlefogcat.esus.widget.TextView
 

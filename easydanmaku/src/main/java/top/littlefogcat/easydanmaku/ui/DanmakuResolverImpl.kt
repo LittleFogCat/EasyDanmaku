@@ -1,6 +1,6 @@
 package top.littlefogcat.easydanmaku.ui
 
-import top.littlefogcat.easydanmaku.danmaku.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import java.util.*
 
 /**
@@ -10,8 +10,8 @@ import java.util.*
 class DanmakuResolverImpl : DanmakuResolver {
     private var data = TreeSet<DanmakuItem>(compareBy { danmaku -> danmaku.time })
     private var lastRetrieveTime = 0
-    private val startDummy = DanmakuItem("", 0, 0, 0, 0)
-    private val endDummy = DanmakuItem("", 0, 0, 0, 0)
+    private val startItem = DanmakuItem("", 0, 0, 0, 0)
+    private val endItem = DanmakuItem("", 0, 0, 0, 0)
 
     override fun setData(danmakus: Collection<DanmakuItem>) {
         data.clear()
@@ -28,8 +28,8 @@ class DanmakuResolverImpl : DanmakuResolver {
         if (endTime <= startTime) {
             return Collections.emptyList()
         }
-        startDummy.time = startTime
-        endDummy.time = endTime
-        return data.subSet(startDummy, endDummy)
+        startItem.time = startTime
+        endItem.time = endTime
+        return data.subSet(startItem, endItem)
     }
 }
