@@ -1,5 +1,6 @@
 package top.littlefogcat.esus.view
 
+import android.content.Context
 import android.view.SurfaceHolder
 
 /**
@@ -21,4 +22,6 @@ interface ISurface {
     var h: Int
 
     fun getHolder(): SurfaceHolder
+
+    fun getContext(): Context
 }

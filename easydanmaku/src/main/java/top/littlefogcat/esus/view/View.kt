@@ -1,5 +1,6 @@
 package top.littlefogcat.esus.view
 
+import android.content.Context
 import android.graphics.*
 import android.util.Log
 import androidx.annotation.IntDef
@@ -66,18 +67,20 @@ open class View {
 
     /* ===================== attributes ===================== */
     /**
-     * 透明度，0~1。
-     * 0为完全透明，1为完全不透明。
+     * 透明度，0~255。
+     * 0为完全透明，255为完全不透明。
      */
-    var alpha = 1f
+    var alpha = 255
 
     var backgroundColor = Color.TRANSPARENT
 
-    /* ===================== members ===================== */
+    /* ===================== fields ===================== */
 
     protected val TAG = javaClass.simpleName
     var parent: ViewParent? = null
         internal set
+    val context: Context?
+        get() = attachInfo?.context
     protected var attachInfo: AttachInfo? = null
     protected open val paint = Paint()
     open var animation: Animation? = null
@@ -124,16 +127,17 @@ open class View {
     open fun preDraw(canvas: Canvas, parent: ViewParent?, time: Int) {}
 
     /**
-     * 这里只走这个重载
+     * 绘制只走这个重载。
+     *
+     * 这里有个很坑的地方，这个[canvas]是Surface的canvas，所以在绘制的时候，
+     * 需要移动canvas到0点。
      */
     fun draw(canvas: Canvas, parent: ViewParent?, time: Int) {
         preDraw(canvas, parent, time)
         if (getVisibility() == VISIBLE) {
             /* --- Pre-draw --- */
             canvas.save()
-            matrix.preTranslate(rawX, rawY)
-            canvas.concat(matrix)
-            matrix.reset()
+            canvas.translate(x, y)
             /* --- Draw background --- */
             drawBackground(canvas)
             /* --- Draw content --- */
@@ -151,8 +155,6 @@ open class View {
     /**
      * 覆写onDraw绘制。
      * 与Android View不同，这个回调每帧都会调用。
-     * 这里有个很坑的地方，这个[canvas]是SurfaceView的canvas，所以在绘制的时候，
-     * 坐标需要根据根布局来
      */
     open fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
     }
@@ -185,6 +187,11 @@ open class View {
         var rootView: View? = null
         var drawingTime: Int = 0
         var forceLayout = false
+
+        /**
+         * No context in constructor, so save it here
+         */
+        var context: Context? = null
     }
 
     open fun isAttached(): Boolean {
