@@ -1,8 +1,10 @@
 package top.littlefogcat.esus.view
 
+import android.content.Context
 import android.graphics.Canvas
 import android.os.*
 import android.view.Choreographer
+import android.view.SurfaceView
 import top.littlefogcat.esus.view.util.Assert
 import top.littlefogcat.esus.view.util.EsusLog
 import top.littlefogcat.esus.view.util.Timing
@@ -80,7 +82,7 @@ import top.littlefogcat.esus.view.util.Timing
  */
 @Suppress("unused", "ProtectedInFinal", "FoldInitializerAndIfToElvis")
 class ViewRootImpl(
-    val surface: ISurface,
+    var surface: ISurface?,
     private var mode: Int = MODE_CHOREOGRAPHER, // todo
     private val useHardwareAccelerateIfPossible: Boolean = true,
 ) : ViewParent {
@@ -156,6 +158,7 @@ class ViewRootImpl(
             view = root
             attachInfo = View.AttachInfo().also {
                 it.rootView = root
+                it.context = surface?.getContext()
                 root.dispatchAttached(it)
             }
         }
@@ -169,7 +172,9 @@ class ViewRootImpl(
     }
 
     private fun performLayout() {
-        view?.layout(0, 0, surface.w, surface.h)
+        surface?.apply {
+            view?.layout(0, 0, w, h)
+        }
     }
 
     private fun performDraw(canvas: Canvas, time: Int) {
@@ -179,7 +184,8 @@ class ViewRootImpl(
 
     private fun doTraversals() {
         val view = view
-        if (view == null || destroy) {
+        val surface = surface
+        if (view == null || destroy || surface == null) {
             return
         }
 //        Assert.setValue(this)
@@ -264,6 +270,10 @@ class ViewRootImpl(
     private fun doDie() {
         choreographer.removeFrameCallback(frameTask)
         handler.removeCallbacksAndMessages(null)
+        view?.dispatchDetached()
+        view = null
+        surface = null
+        attachInfo = null
         susMainThread.quit()
     }
 
