@@ -4,9 +4,19 @@ import androidx.core.util.Pools
 import top.littlefogcat.easydanmaku.Danmakus
 import top.littlefogcat.easydanmaku.danmakus.views.*
 
+/**
+ * Todo: (重要) 将这个类修改为非单例的。因为可能创建多个ViewRootImpl实例。
+ */
 object DanmakuPools {
     var size = 0
         private set
+    private val POOLS = mutableMapOf<Int, DanmakuPool<out Danmaku>>().apply {
+        put(Danmaku.TYPE_RL, RLPool)
+        put(Danmaku.TYPE_LR, LRPool)
+        put(Danmaku.TYPE_TOP, TopPool)
+        put(Danmaku.TYPE_BOTTOM, BottomPool)
+        put(Danmaku.TYPE_ADVANCED, AdvPool)
+    }
 
     private object RLPool : DanmakuPool<RLDanmaku>(Danmaku.MAX_POOL_SIZE_LARGE) {
         override fun create(): RLDanmaku {
@@ -38,15 +48,16 @@ object DanmakuPools {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun ofType(type: Int): DanmakuPool<Danmaku> {
-        return when (type) {
-            Danmaku.TYPE_RL -> RLPool
-            Danmaku.TYPE_LR -> LRPool
-            Danmaku.TYPE_TOP -> TopPool
-            Danmaku.TYPE_BOTTOM -> BottomPool
-            Danmaku.TYPE_ADVANCED -> AdvPool
-            else -> throw NoSuchElementException()
-        } as DanmakuPool<Danmaku>
+        return POOLS[type] as DanmakuPool<Danmaku>
+    }
+
+    fun clear() {
+        POOLS.values.forEach {
+            it.clear()
+        }
+        size = 0
     }
 
     abstract class DanmakuPool<T : Danmaku?> internal constructor(private val maxPoolSize: Int) : Pools.Pool<T> {
@@ -64,6 +75,9 @@ object DanmakuPools {
         }
 
         override fun release(instance: T): Boolean {
+            if (!Danmakus.Options.recycle) {
+                return false
+            }
             if (size >= maxPoolSize) {
                 return false
             }
@@ -72,6 +86,11 @@ object DanmakuPools {
             size++
             DanmakuPools.size++
             return true
+        }
+
+        fun clear() {
+            head = null
+            size = 0
         }
 
         abstract fun create(): T

@@ -112,7 +112,7 @@ object Danmakus {
 
         var showFPS = false
 
-        var recycle = false
+        var recycle = true
     }
 
     /**
@@ -150,5 +150,13 @@ object Danmakus {
          * @see Danmaku.textScale
          */
         var baseTextSize = 60f
+    }
+
+    object Constants {
+        const val PRIORITY_MAX = 100
+        const val PRIORITY_HIGH = 10
+        const val PRIORITY_DEFAULT = 0
+        const val PRIORITY_LOW = -10
+        const val PRIORITY_MIN = -100
     }
 }

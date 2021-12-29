@@ -1,9 +1,12 @@
 package top.littlefogcat.easydanmaku.sample
 
+import android.content.Context
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
 import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
+import top.littlefogcat.easydanmaku.sample.sample.SampleActivity
+import top.littlefogcat.easydanmaku.sample.util.BitmapUtil
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
@@ -13,7 +16,7 @@ import java.util.*
  * @email littlefogcat@foxmail.com
  */
 object DanmakuLoader {
-    fun load(source: InputStream): Collection<DanmakuItem> {
+    fun load(context: Context, source: InputStream): Collection<DanmakuItem> {
         val danmakus = TreeSet<DanmakuItem> { o1, o2 -> o1.time - o2.time }
         val parser = XmlPullParserFactory.newInstance().newPullParser()
         parser.setInput(InputStreamReader(source))
@@ -49,6 +52,15 @@ object DanmakuLoader {
 
                         if (type != Danmaku.TYPE_UNKNOWN && type != Danmaku.TYPE_ADVANCED) {
                             val item = DanmakuItem(t, time, type, color, 0, id, textSize / 25f)
+//                            if (id[id.lastIndex - 1] == '3') {
+                            // Test Avatar
+                            item.avatar = BitmapUtil.decodeResourceWithSize(
+                                context.resources,
+                                R.drawable.head,
+                                80f,
+                                80f
+                            )
+//                            }
                             danmakus.add(item)
                         }
                     }

@@ -1,9 +1,11 @@
 package top.littlefogcat.easydanmaku.danmakus.views
 
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.text.TextPaint
+import android.util.Log
+import androidx.core.graphics.drawable.toDrawable
 import top.littlefogcat.easydanmaku.Danmakus
 import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.esus.view.ViewGroup
@@ -64,6 +66,12 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
             field = value
         }
 
+    var avatar: Bitmap?
+        get() = item?.avatar
+        set(value) {
+            item?.avatar = value
+        }
+
     var time: Int
         get() = item?.time ?: 0
         set(value) {
@@ -97,7 +105,8 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
     override val paint: TextPaint = Danmakus.Globals.paint
 
     /** use for danmaku pool **/
-    var next: Danmaku? = null @JvmName("setNext") internal set
+    var next: Danmaku? = null
+        @JvmName("setNext") internal set
     open val duration = 5000
     var isPaused = false
     var lastDrawingTime = -1
@@ -115,6 +124,18 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
 
     /* ===================== functions ===================== */
 
+    init {
+        stroke = Stroke(Color.BLACK, 3f)
+    }
+
+    override fun onAttached(info: AttachInfo) {
+        super.onAttached(info)
+        val context = info.context ?: return
+        if (drawableLeft == null && avatar != null) {
+            drawableLeft = avatar?.toDrawable(context.resources)
+        }
+    }
+
     override fun preDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
         if (lastDrawingTime != -1 && !isPaused) {
             val diff = time - lastDrawingTime
@@ -125,14 +146,6 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
     }
 
     override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
-        val boring = boring ?: return
-        val x = 0f
-        val y = -boring.ascent.toFloat()
-        paint.color = Color.BLACK
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 4f
-        paint.textSize = textSize
-        canvas.drawText(text, 0, text.length, x, y, paint)
         super.onDraw(canvas, parent, time)
         if (!more && parent is ViewGroup) {
             parent.removeView(this)
@@ -144,6 +157,8 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
             // should recycle
             reset()
         }
+        avatar?.recycle()
+        avatar = null
     }
 
     private fun reset() {
@@ -157,9 +172,10 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         parent = null
         attachInfo = null
         animation = null
-        matrix.reset()
-        alpha = 1f
+        // matrix.reset()
+        alpha = 255
         backgroundColor = Color.TRANSPARENT
+        drawableLeft = null
     }
 
     /**

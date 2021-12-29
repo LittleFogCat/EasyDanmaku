@@ -1,5 +1,6 @@
 package top.littlefogcat.easydanmaku.danmakus
 
+import android.graphics.Bitmap
 import top.littlefogcat.easydanmaku.Danmakus
 
 /**
@@ -24,6 +25,7 @@ class DanmakuItem(
     open var priority: Int,
     open var id: String = "",
     open var textScale: Float = 1f,
+    open var avatar: Bitmap? = null,
 ) {
     override fun toString(): String {
         return "$text/$time/$type"

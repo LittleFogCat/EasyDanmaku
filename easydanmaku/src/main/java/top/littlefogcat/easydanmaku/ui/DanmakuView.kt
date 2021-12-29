@@ -57,6 +57,7 @@ import java.lang.Exception
  */
 class DanmakuView : EsusSurfaceView, IDanmakuView {
     override val rootView = DanmakuContainer()
+    val container get() = rootView
 
     private var actionOnFrame: ((Long) -> Unit)? = null
     override var frameTask = object : Choreographer.FrameCallback {
@@ -108,27 +109,34 @@ class DanmakuView : EsusSurfaceView, IDanmakuView {
     }
 
     override fun setDanmakus(danmakus: Collection<DanmakuItem>) {
-        rootView.setDanmakus(danmakus)
+        container.setDanmakus(danmakus)
     }
 
     override fun setShowFPS(show: Boolean) {
-        val fpsView = rootView.fpsView
+        val fpsView = container.fpsView
         fpsView.setVisibility(if (show) View.VISIBLE else View.GONE)
     }
 
     override fun setShow(show: Boolean) {
-        rootView.setVisibility(if (show) View.VISIBLE else View.GONE)
+        container.setVisibility(if (show) View.VISIBLE else View.GONE)
     }
 
     /**
+     * PS: This method will reset the `time` field of [danmaku] to [time].
      * TODO 会有一定概率被discard，自己发送的需要提高优先级
+     * @see [addDanmakuImmediately]
      */
     override fun sendDanmaku(danmaku: Danmaku) {
+        danmaku.time = time
         super.sendDanmaku(danmaku)
     }
 
+    override fun addDanmakuImmediately(danmaku: Danmaku) {
+
+    }
+
     override fun addDanmaku(danmaku: Danmaku) {
-        rootView.addView(danmaku)
+        container.addView(danmaku)
     }
 
     override fun setActionOnFrame(action: ((Long) -> Unit)?) {
@@ -144,7 +152,7 @@ class DanmakuView : EsusSurfaceView, IDanmakuView {
     }
 
     override fun setOnDanmakuClickListener(action: (Danmaku) -> Boolean) {
-        rootView.setOnDanmakuClickListener(action)
+        container.setOnDanmakuClickListener(action)
     }
 
     override fun setDanmakuOpacity(opacity: Float) {

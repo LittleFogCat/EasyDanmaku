@@ -65,6 +65,15 @@
             android:text="@string/start_random_danmaku"
             android:textColor="#fff"
             android:visibility="gone" />
-
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="send" />
 </RelativeLayout>

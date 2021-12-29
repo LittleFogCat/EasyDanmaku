@@ -1,4 +1,4 @@
-package top.littlefogcat.easydanmaku.sample.sample
+package top.littlefogcat.easydanmaku.sample.pressuretest
 
 import android.graphics.Camera
 import android.graphics.Canvas
@@ -10,6 +10,7 @@ import top.littlefogcat.esus.view.ViewParent
 import kotlin.math.abs
 
 /**
+ * 高级弹幕参考实现
  * @author littlefogcat
  * @email littlefogcat@foxmail.com
  */

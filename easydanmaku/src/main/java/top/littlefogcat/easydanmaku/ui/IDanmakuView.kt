@@ -20,7 +20,7 @@ import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 interface IDanmakuView {
 
     /** Send a danmaku immediately **/
-    fun sendDanmaku(danmaku: Danmaku) = addDanmaku(danmaku)
+    fun sendDanmaku(danmaku: Danmaku) = addDanmakuImmediately(danmaku)
 
     /**
      * Set data.
@@ -35,6 +35,9 @@ interface IDanmakuView {
 
     /** Add a danmaku to display **/
     fun addDanmaku(danmaku: Danmaku)
+
+    /** Add a danmaku to display immediately **/
+    fun addDanmakuImmediately(danmaku: Danmaku)
 
     /** Pause all **/
     @Deprecated("Just stop updating ISurface.time")

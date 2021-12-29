@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import top.littlefogcat.easydanmaku.sample.GlobalValues
-import top.littlefogcat.easydanmaku.sample.sample.SpecialView
 import top.littlefogcat.esus.EsusSurfaceView
 import top.littlefogcat.esus.view.TouchEvent
 import top.littlefogcat.esus.view.ViewGroup
@@ -30,6 +29,7 @@ class Surface : EsusSurfaceView {
 
     init {
         if (GlobalValues.enableMask) {
+            // This is experimental; should disable hardware acceleration.
             setLayerType(LAYER_TYPE_SOFTWARE, null)
         }
     }
@@ -71,11 +71,11 @@ class Surface : EsusSurfaceView {
                 r.nextInt(-300, 1800),
                 r.nextInt(-30, GlobalValues.h - 88)
             )
-            rootView.addView(view.apply {
+            rootView.addView(view.also {
                 if (stroke) {
-                    setStrokeEnabled(stroke)
+                    it.setStrokeEnabled(stroke)
                 }
-                textColor = when (r.nextInt() % 10) {
+                it.textColor = when (r.nextInt() % 10) {
                     1, 2 -> Color.RED
                     3 -> Color.BLUE
                     4 -> Color.GREEN

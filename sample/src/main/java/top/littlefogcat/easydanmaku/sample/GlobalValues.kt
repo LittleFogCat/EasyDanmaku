@@ -1,5 +1,6 @@
 package top.littlefogcat.easydanmaku.sample
-import  top.littlefogcat.easydanmaku.sample.pressuretest.RootView
+
+import top.littlefogcat.easydanmaku.sample.pressuretest.RootView
 
 /**
  * @author littlefogcat
@@ -11,7 +12,8 @@ object GlobalValues {
      *
      * @see RootView.drawMask
      */
-    var enableMask = true
+    var enableMask = false
     var w = 0
     var h = 0
+
 }

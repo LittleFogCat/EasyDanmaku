@@ -5,7 +5,8 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.SystemClock
 import top.littlefogcat.easydanmaku.Danmakus
-import top.littlefogcat.easydanmaku.danmakus.*
+import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
+import top.littlefogcat.easydanmaku.danmakus.DanmakuPools
 import top.littlefogcat.easydanmaku.danmakus.views.*
 import top.littlefogcat.easydanmaku.util.IntervalList
 import top.littlefogcat.esus.view.View
@@ -109,16 +110,16 @@ class DanmakuContainer : ViewGroup() {
     }
 
     override fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
-        // 从池中取一个view
         val newDanmakus = resolver.retrieve(time)
         if (!newDanmakus.isEmpty()) {
 //            EzLog.d(TAG, "$time, newDanmakus: $newDanmakus")
         }
         newDanmakus.forEach {
+            // 从池中取一个view
             val pool = DanmakuPools.ofType(it.type)
             val view = pool.acquire()
-            view.item = it
             view.setVisibility(GONE)
+            view.item = it
             addView(view)
         }
     }

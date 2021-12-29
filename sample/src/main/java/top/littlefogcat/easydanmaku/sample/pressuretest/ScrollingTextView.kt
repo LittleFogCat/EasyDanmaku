@@ -2,7 +2,6 @@ package top.littlefogcat.easydanmaku.sample.pressuretest
 
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import top.littlefogcat.esus.view.ViewGroup
 import top.littlefogcat.esus.view.ViewParent
 import top.littlefogcat.esus.widget.TextView
@@ -15,10 +14,13 @@ import kotlin.random.Random
 class ScrollingTextView(text: CharSequence, x: Int, y: Int) :
     TextView(text) {
     private val speed: Float
-    private var stroke = false
 
     fun setStrokeEnabled(enable: Boolean) {
-        stroke = enable
+        if (enable) {
+            stroke = Stroke(Color.BLACK, 2f)
+        } else {
+            stroke = null
+        }
     }
 
     init {
@@ -33,17 +35,6 @@ class ScrollingTextView(text: CharSequence, x: Int, y: Int) :
         parent as ViewGroup
         if (translationX < -width || translationX >= parent.width) {
             translationX = (-width).toFloat()
-        }
-
-        if (stroke) {
-            val boring = boring ?: return
-            val x = 0f
-            val y = -boring.ascent.toFloat()
-            paint.color = Color.BLACK
-            paint.style = Paint.Style.STROKE
-            paint.textSize = textSize
-            paint.strokeWidth = 3f
-            canvas.drawText(text, 0, text.length, x, y, paint)
         }
 
         super.onDraw(canvas, parent, time)

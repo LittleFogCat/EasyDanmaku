@@ -56,11 +56,13 @@ class Timing {
         }
     }
 
+    @Synchronized
     private fun start(name: String, frame: Boolean = false) {
         if (!enable) return
         timings.addLast(InnerTiming(name, SystemClock.elapsedRealtimeNanos(), frame))
     }
 
+    @Synchronized
     private fun end(): Long {
         if (timings.size == 0) {
             return 0
