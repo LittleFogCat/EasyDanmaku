@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val seekBar: SeekBar by lazy { findViewById(R.id.seekBar) }
     private val tvPressure: TextView by lazy { findViewById(R.id.tvPressure) }
     private val cbStroke: CheckBox by lazy { findViewById(R.id.cbStroke) }
+    private val cbAntiMask: CheckBox by lazy { findViewById(R.id.cbAntiMask) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             val i = Intent(this, PressureTestActivity::class.java)
             i.putExtra("size", size)
             i.putExtra("stroke", cbStroke.isChecked)
+            i.putExtra("antiMask", cbAntiMask.isChecked)
             startActivity(i)
         }
 

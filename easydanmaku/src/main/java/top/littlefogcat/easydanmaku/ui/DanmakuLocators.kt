@@ -90,8 +90,8 @@ internal class RLLocator : DanmakuLocator<RLDanmaku> {
             override fun isAcquirable(interval: Interval, danmaku: RLDanmaku): Boolean {
                 with(interval.value) {
                     if (this == null) return true
-                    if (!isAttached()) {
-                        // FIXME: 为何出现？释放失败？
+                    if (parent == null) {
+                        // FIXME: 为何出现？释放失败？未调用 release？
                         return true
                     }
                     return entirelyDisplayTime <= danmaku.time &&
@@ -142,7 +142,7 @@ internal class LRLocator : DanmakuLocator<LRDanmaku> {
         val tails = this.tails ?: object : IntervalList<LRDanmaku>(0, maxHeight) {
             override fun isAcquirable(interval: Interval, danmaku: LRDanmaku): Boolean {
                 return (interval.value ?: return true).let { current ->
-                    !current.isAttached() ||
+                    current.parent == null ||
                             current.entirelyDisplayTime <= danmaku.time &&
                             current.disappearTime <= danmaku.reachingEdgeTime
                 }
@@ -178,7 +178,7 @@ internal class TopLocator : DanmakuLocator<TopPinnedDanmaku> {
         val tails = this.tails ?: object : IntervalList<TopPinnedDanmaku>(0, maxHeight) {
             override fun isAcquirable(interval: Interval, danmaku: TopPinnedDanmaku): Boolean =
                 with(interval.value) {
-                    return this == null || !this.isAttached()
+                    return this == null || parent == null
                 }
         }
         if (this.tails == null) {
@@ -211,7 +211,7 @@ internal class BottomLocator : DanmakuLocator<BottomPinnedDanmaku> {
         val tails = this.tails ?: object : IntervalList<BottomPinnedDanmaku>(0, maxHeight) {
             override fun isAcquirable(interval: Interval, danmaku: BottomPinnedDanmaku): Boolean =
                 with(interval.value) {
-                    return this == null || !this.isAttached()
+                    return this == null || parent == null
                 }
         }
         if (this.tails == null) {

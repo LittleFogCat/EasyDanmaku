@@ -3,8 +3,6 @@ package top.littlefogcat.easydanmaku.sample.pressuretest
 import android.graphics.*
 import android.os.SystemClock
 import android.util.Log
-import android.view.SurfaceView
-import top.littlefogcat.easydanmaku.sample.GlobalValues
 import top.littlefogcat.easydanmaku.sample.R
 import top.littlefogcat.esus.view.ViewParent
 import top.littlefogcat.esus.view.util.FPS
@@ -53,7 +51,8 @@ class RootView : FrameLayout() {
 
     override fun drawForeground(canvas: Canvas) {
         super.drawForeground(canvas)
-        if (GlobalValues.enableMask && rect != null && mask != null) {
+        val surface = attachInfo?.viewRootImpl?.surface
+        if (surface != null && (surface as Surface).enableAntiMask && rect != null && mask != null) {
             drawMask(canvas)
         }
     }

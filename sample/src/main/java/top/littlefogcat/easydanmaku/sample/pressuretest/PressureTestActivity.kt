@@ -18,8 +18,10 @@ class PressureTestActivity : AppCompatActivity() {
 
         val size = intent.getIntExtra("size", 100)
         val stroke = intent.getBooleanExtra("stroke", false)
+        val antiMask = intent.getBooleanExtra("antiMask", false)
         val sf = findViewById<Surface>(R.id.surface)
-        sf.addRandomView(size, stroke)
+        sf.generateViews(size, stroke)
+        sf.enableAntiMask = antiMask
 
         title = "${size}弹幕压力测试"
     }

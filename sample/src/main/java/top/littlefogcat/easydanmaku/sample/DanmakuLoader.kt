@@ -59,9 +59,9 @@ object DanmakuLoader {
 
                         if (type != Danmaku.TYPE_UNKNOWN && type != Danmaku.TYPE_ADVANCED) {
                             val item = DanmakuItem(t, time, type, color, 0, id, textSize / 25f)
-                            val random = Random.Default.nextInt(21)
+                            val random = Random.Default.nextInt(25)
                             if (random < avatars.size) {
-                                // 随机添加头像
+                                // 随机生成头像
                                 val bmp = BitmapUtil.decodeResourceWithSize(
                                     context.resources,
                                     avatars[random],

@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.SurfaceHolder
-import top.littlefogcat.easydanmaku.sample.GlobalValues
 import top.littlefogcat.esus.EsusSurfaceView
 import top.littlefogcat.esus.view.TouchEvent
 import top.littlefogcat.esus.view.ViewGroup
@@ -23,23 +22,23 @@ class Surface : EsusSurfaceView {
     private var rootViewSet = false
     private var added = false
 
+    /**
+     * 开启遮罩，可实现人像防挡，但需要关闭硬件加速
+     */
+    var enableAntiMask = false
+        set(enable) {
+            setLayerType(if (enable) LAYER_TYPE_SOFTWARE else LAYER_TYPE_HARDWARE, null)
+            field = enable
+        }
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    init {
-        if (GlobalValues.enableMask) {
-            // This is experimental; should disable hardware acceleration.
-            setLayerType(LAYER_TYPE_SOFTWARE, null)
-        }
-    }
-
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        GlobalValues.w = width
-        GlobalValues.h = height
         super.surfaceChanged(holder, format, width, height)
         if (!added && size != -1) {
-            addRandomViewInner()
+            generateViewsInner()
         } else {
             rootViewSet = true
         }
@@ -54,21 +53,21 @@ class Surface : EsusSurfaceView {
         return result || super.dispatchTouchEvent(event)
     }
 
-    fun addRandomView(size: Int, stroke: Boolean) {
+    fun generateViews(size: Int, stroke: Boolean) {
         this.size = size
         this.stroke = stroke
         if (rootViewSet) {
-            addRandomViewInner()
+            generateViewsInner()
         }
     }
 
-    private fun addRandomViewInner() {
+    private fun generateViewsInner() {
         val r = Random.Default
         repeat(size) {
             val view = ScrollingTextView(
                 "Hello World",
                 r.nextInt(-300, 1800),
-                r.nextInt(-30, GlobalValues.h - 88)
+                r.nextInt(-30, height - 88)
             )
             rootView.addView(view.also {
                 if (stroke) {
