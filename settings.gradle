@@ -1,2 +1,2 @@
-include ':obsolete', ':sample'
+include ':sample'
 include ':easydanmaku'
