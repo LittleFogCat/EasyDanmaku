@@ -1,11 +1,8 @@
 package top.littlefogcat.esus.view
 
-import android.content.Context
 import android.graphics.Canvas
 import android.os.*
 import android.view.Choreographer
-import android.view.SurfaceView
-import top.littlefogcat.esus.view.util.Assert
 import top.littlefogcat.esus.view.util.EsusLog
 import top.littlefogcat.esus.view.util.Timing
 
@@ -94,7 +91,7 @@ class ViewRootImpl(
     private var layoutRequest = true
     private var traversalScheduled = false
     private var stopTheWorld = true
-    private var lastTraverseTime = 0
+    private var lastTraverseTime = 0L
 
     @Volatile
     private var destroy = false
@@ -177,7 +174,7 @@ class ViewRootImpl(
         }
     }
 
-    private fun performDraw(canvas: Canvas, time: Int) {
+    private fun performDraw(canvas: Canvas, time: Long) {
         attachInfo?.drawingTime = time
         view?.draw(canvas, this, time)
     }
@@ -191,7 +188,7 @@ class ViewRootImpl(
 //        Assert.setValue(this)
 //        EsusLog.v("ViewRootImpl", "doTraversals")
         traversalScheduled = false
-        val time: Int = surface.time
+        val time: Long = surface.time
         val w: Int = surface.w
         val h: Int = surface.h
         if (time != lastTraverseTime) {

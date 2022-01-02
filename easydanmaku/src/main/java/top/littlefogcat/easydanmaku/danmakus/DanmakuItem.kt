@@ -19,7 +19,7 @@ import top.littlefogcat.easydanmaku.Danmakus
  */
 class DanmakuItem(
     open var text: String,
-    open var time: Int,
+    open var time: Long,
     open var type: Int,
     open var color: Int,
     open var priority: Int,

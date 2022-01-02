@@ -18,10 +18,10 @@ interface DanmakuResolver {
      * Returns the danmakus since last retrieve to [time]. If it's the first time invoked,
      * returns danmakus from 0 to [time].
      */
-    fun retrieve(time: Int): Collection<DanmakuItem>
+    fun retrieve(time: Long): Collection<DanmakuItem>
 
     /**
      * Returns the danmakus between time [startTime] and [endTime].
      */
-    fun retrieve(startTime: Int, endTime: Int): Collection<DanmakuItem>
+    fun retrieve(startTime: Long, endTime: Long): Collection<DanmakuItem>
 }

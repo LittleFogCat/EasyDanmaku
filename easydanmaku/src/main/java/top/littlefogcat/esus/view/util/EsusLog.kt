@@ -1,14 +1,13 @@
 package top.littlefogcat.esus.view.util
 
 import android.util.Log
-import top.littlefogcat.easydanmaku.BuildConfig
 
 /**
  * @author littlefogcat
  * @email littlefogcat@foxmail.com
  */
 object EsusLog {
-    var enabled = BuildConfig.DEBUG
+    var enabled = false
     var filterLevel = 0
 
     fun v(TAG: String, msg: String) {

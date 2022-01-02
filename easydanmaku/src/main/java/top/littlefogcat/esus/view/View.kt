@@ -2,9 +2,7 @@ package top.littlefogcat.esus.view
 
 import android.content.Context
 import android.graphics.*
-import android.util.Log
 import androidx.annotation.IntDef
-import top.littlefogcat.esus.view.animation.Animation
 
 /**
  * Base display unit in *Easy Surface UI System*.
@@ -83,8 +81,6 @@ open class View {
         get() = attachInfo?.context
     protected var attachInfo: AttachInfo? = null
     protected open val paint = Paint()
-    open var animation: Animation? = null
-    open val isAnimating get() = animation != null
     protected val matrix = Matrix()
 
     /* ===================== flags ===================== */
@@ -124,7 +120,7 @@ open class View {
     open fun onLayout(l: Int, t: Int, r: Int, b: Int) {
     }
 
-    open fun preDraw(canvas: Canvas, parent: ViewParent?, time: Int) {}
+    open fun preDraw(canvas: Canvas, parent: ViewParent?, time: Long) {}
 
     /**
      * 绘制只走这个重载。
@@ -132,7 +128,7 @@ open class View {
      * 这里有个很坑的地方，这个[canvas]是Surface的canvas，所以在绘制的时候，
      * 需要移动canvas到0点。
      */
-    fun draw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    fun draw(canvas: Canvas, parent: ViewParent?, time: Long) {
         preDraw(canvas, parent, time)
         if (getVisibility() == VISIBLE) {
             /* --- Pre-draw --- */
@@ -156,7 +152,7 @@ open class View {
      * 覆写onDraw绘制。
      * 与Android View不同，这个回调每帧都会调用。
      */
-    open fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    open fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
     }
 
     /**
@@ -175,7 +171,7 @@ open class View {
 
     open fun drawForeground(canvas: Canvas) {}
 
-    open fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Int) {}
+    open fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Long) {}
 
     open fun requestLayout() {
         needLayout = true
@@ -185,7 +181,7 @@ open class View {
     /* ===================== Attach ===================== */
     class AttachInfo {
         var rootView: View? = null
-        var drawingTime: Int = 0
+        var drawingTime: Long = 0
         var forceLayout = false
 
         /**
@@ -310,17 +306,6 @@ open class View {
     }
 
     /* ===================== section 2 ===================== */
-
-    @Deprecated("Implement animation in onDraw()")
-    open fun startAnimation(animation: Animation) {
-        this.animation = animation
-        animation.start()
-    }
-
-    @Deprecated("Implement animation in onDraw()")
-    open fun pauseAnimation() {
-        animation?.pause()
-    }
 
     @IntDef(VISIBLE, INVISIBLE)
     annotation class Visibility

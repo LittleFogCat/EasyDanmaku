@@ -17,7 +17,7 @@ import kotlin.math.abs
 class SpecialView : View() {
     private val camera = Camera()
 
-    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         parent as ViewGroup
 
         // draw 1

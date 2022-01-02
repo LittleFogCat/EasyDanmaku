@@ -6,11 +6,13 @@ import top.littlefogcat.easydanmaku.danmakus.views.*
 
 /**
  * Todo: (重要) 将这个类修改为非单例的。因为可能创建多个ViewRootImpl实例。
+ * TODO: ↑ 是否有必要？
  */
 object DanmakuPools {
-    var size = 0
-        private set
-    private val POOLS = mutableMapOf<Int, DanmakuPool<out Danmaku>>().apply {
+    val size: Int
+        get() = pools.values.sumOf { it.size }
+
+    private val pools = mutableMapOf<Int, DanmakuPool<out Danmaku>>().apply {
         put(Danmaku.TYPE_RL, RLPool)
         put(Danmaku.TYPE_LR, LRPool)
         put(Danmaku.TYPE_TOP, TopPool)
@@ -50,19 +52,18 @@ object DanmakuPools {
 
     @Suppress("UNCHECKED_CAST")
     fun ofType(type: Int): DanmakuPool<Danmaku> {
-        return POOLS[type] as DanmakuPool<Danmaku>
+        return pools[type] as DanmakuPool<Danmaku>
     }
 
     fun clear() {
-        POOLS.values.forEach {
+        pools.values.forEach {
             it.clear()
         }
-        size = 0
     }
 
     abstract class DanmakuPool<T : Danmaku?> internal constructor(private val maxPoolSize: Int) : Pools.Pool<T> {
         private var head: T? = null
-        private var size = 0
+        internal var size = 0
         override fun acquire(): T {
             if (!Danmakus.Options.recycle) {
                 return create()
@@ -70,7 +71,6 @@ object DanmakuPools {
             val h = head ?: return create()
             head = h.next as T?
             size--
-            DanmakuPools.size--
             return h
         }
 
@@ -84,7 +84,6 @@ object DanmakuPools {
             instance!!.next = head
             head = instance
             size++
-            DanmakuPools.size++
             return true
         }
 

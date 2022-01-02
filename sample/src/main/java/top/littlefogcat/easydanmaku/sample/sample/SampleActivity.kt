@@ -74,7 +74,7 @@ class SampleActivity : AppCompatActivity() {
              */
             Timing.startSection("GetCurrentPosition")
             val progress = videoView.currentPosition
-            danmakuView.time = progress
+            danmakuView.time = progress.toLong()
             val time = Timing.endSection() / 1000000
             if (time > 1) {
                 EzLog.i("DanmakuView", "getCurrentPosition() takes a long time: ${time}ms")

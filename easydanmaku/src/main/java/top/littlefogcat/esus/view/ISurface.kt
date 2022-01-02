@@ -17,7 +17,7 @@ interface ISurface {
      * time, or anything else. The only thing matters is that this time should be updated timely. If it's not updated
      * before SUS draws the view tree, frame drops will be occurring.
      */
-    var time: Int
+    var time: Long
     var w: Int
     var h: Int
 

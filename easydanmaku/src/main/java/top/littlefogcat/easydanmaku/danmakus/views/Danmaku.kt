@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.text.TextPaint
-import android.util.Log
 import androidx.core.graphics.drawable.toDrawable
 import top.littlefogcat.easydanmaku.Danmakus
 import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
@@ -54,7 +53,8 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         const val MAX_POOL_SIZE_SMALL = 5
     }
 
-    /* ===================== item properties ===================== */
+
+    /* ===================== danmaku properties ===================== */
 
     var item: DanmakuItem? = item
         set(value) {
@@ -72,7 +72,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
             item?.avatar = value
         }
 
-    var time: Int
+    var time: Long
         get() = item?.time ?: 0
         set(value) {
             item?.time = value
@@ -97,19 +97,19 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         set(value) {
             item?.textScale = value
         }
-    val disappearTime: Int
+    open val duration = 5000
+    val disappearTime: Long
         get() = time + duration
 
-    /* ===================== declared members ===================== */
+    /* ===================== other fields ===================== */
 
     override val paint: TextPaint = Danmakus.Globals.paint
 
     /** use for danmaku pool **/
     var next: Danmaku? = null
         @JvmName("setNext") internal set
-    open val duration = 5000
     var isPaused = false
-    var lastDrawingTime = -1
+    var lastDrawingTime = -1L
 
     /**
      * Indicates whether more transform should be done.
@@ -118,7 +118,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
     private var more = false
 
     /**
-     * Percent of 0~1
+     * Float value between 0~1, indicates the process of the animation of this danmaku.
      */
     var process = 0f
 
@@ -136,8 +136,11 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         }
     }
 
-    override fun preDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
-        if (lastDrawingTime != -1 && !isPaused) {
+    /**
+     * 在`preDraw`中做变换
+     */
+    override fun preDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
+        if (lastDrawingTime != -1L && !isPaused) {
             val diff = time - lastDrawingTime
             process += diff.toFloat() / duration
         }
@@ -145,7 +148,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         more = updateOnProcess(process)
     }
 
-    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         super.onDraw(canvas, parent, time)
         if (!more && parent is ViewGroup) {
             parent.removeView(this)
@@ -171,7 +174,6 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
         needLayout = true
         parent = null
         attachInfo = null
-        animation = null
         // matrix.reset()
         alpha = 255
         backgroundColor = Color.TRANSPARENT
@@ -179,7 +181,7 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
     }
 
     /**
-     * Returns if it's still running.
+     * @return if it's still running. When not, the danmaku may be recycled.
      */
     open fun updateOnProcess(process: Float): Boolean {
         return process < 1

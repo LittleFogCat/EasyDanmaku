@@ -63,7 +63,6 @@ class Surface : EsusSurfaceView {
     }
 
     private fun addRandomViewInner() {
-        rootView.addView(SpecialView())
         val r = Random.Default
         repeat(size) {
             val view = ScrollingTextView(
@@ -85,6 +84,7 @@ class Surface : EsusSurfaceView {
                 }
             })
         }
+        rootView.addView(SpecialView())
         added = true
     }
 }

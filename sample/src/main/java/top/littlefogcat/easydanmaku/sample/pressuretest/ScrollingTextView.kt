@@ -30,7 +30,7 @@ class ScrollingTextView(text: CharSequence, x: Int, y: Int) :
         speed = 9 * Random.Default.nextFloat() + 3
     }
 
-    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         translationX += speed
         parent as ViewGroup
         if (translationX < -width || translationX >= parent.width) {

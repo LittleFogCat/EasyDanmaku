@@ -17,7 +17,7 @@ import top.littlefogcat.esus.widget.FrameLayout
  * @email littlefogcat@foxmail.com
  */
 open class EsusSurfaceView : SurfaceView, SurfaceHolder.Callback, ISurface {
-    override var time: Int = 0
+    override var time: Long = 0
     override var w: Int = 0
     override var h: Int = 0
 
@@ -26,7 +26,7 @@ open class EsusSurfaceView : SurfaceView, SurfaceHolder.Callback, ISurface {
 
     protected open var frameTask = object : Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
-            time = (frameTimeNanos / NANOS_PER_MILLIS).toInt()
+            time = frameTimeNanos / NANOS_PER_MILLIS
             Choreographer.getInstance().postFrameCallback(this)
         }
     }

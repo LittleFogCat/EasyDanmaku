@@ -24,12 +24,11 @@ class RootView : FrameLayout() {
     override fun onAttached(info: AttachInfo) {
         super.onAttached(info)
         backgroundColor = Color.BLACK
-        val surface = getSurface()
-        if (surface is SurfaceView) {
-            val context = surface.context
+        val context = info.context
+        if (context != null) {
             mask = BitmapFactory.decodeResource(context.resources, R.drawable.mask)
         } else {
-            Log.d(TAG, "onAttached: $surface")
+            Log.d(TAG, "onAttached: ${getSurface()}")
         }
     }
 
@@ -47,7 +46,7 @@ class RootView : FrameLayout() {
         }
     }
 
-    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         super.onDraw(canvas, parent, time)
         fps.onFrame(SystemClock.elapsedRealtimeNanos())
     }
@@ -66,7 +65,7 @@ class RootView : FrameLayout() {
         paint.xfermode = mode
     }
 
-    override fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun afterDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         val text = " FPS: ${fps}, current: $childCount, frameTime: ${Timing.lastFrameTime}ms "
 
         val l = 100f

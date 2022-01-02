@@ -9,7 +9,7 @@ import java.util.*
  */
 class DanmakuResolverImpl : DanmakuResolver {
     private var data = TreeSet<DanmakuItem>(compareBy { danmaku -> danmaku.time })
-    private var lastRetrieveTime = 0
+    private var lastRetrieveTime = 0L
     private val startItem = DanmakuItem("", 0, 0, 0, 0)
     private val endItem = DanmakuItem("", 0, 0, 0, 0)
 
@@ -18,13 +18,13 @@ class DanmakuResolverImpl : DanmakuResolver {
         data.addAll(danmakus)
     }
 
-    override fun retrieve(time: Int): Collection<DanmakuItem> {
+    override fun retrieve(time: Long): Collection<DanmakuItem> {
         val startTime = lastRetrieveTime
         lastRetrieveTime = time
         return retrieve(startTime, time)
     }
 
-    override fun retrieve(startTime: Int, endTime: Int): Collection<DanmakuItem> {
+    override fun retrieve(startTime: Long, endTime: Long): Collection<DanmakuItem> {
         if (endTime <= startTime) {
             return Collections.emptyList()
         }

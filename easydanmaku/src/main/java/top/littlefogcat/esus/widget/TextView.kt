@@ -79,7 +79,7 @@ open class TextView() : View() {
         this.boring = boring
     }
 
-    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Int) {
+    override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         if (attachInfo == null) {
             return
         }

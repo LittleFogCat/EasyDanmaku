@@ -5,7 +5,6 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
 import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
-import top.littlefogcat.easydanmaku.sample.sample.SampleActivity
 import top.littlefogcat.easydanmaku.sample.util.BitmapUtil
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -17,7 +16,7 @@ import java.util.*
  */
 object DanmakuLoader {
     fun load(context: Context, source: InputStream): Collection<DanmakuItem> {
-        val danmakus = TreeSet<DanmakuItem> { o1, o2 -> o1.time - o2.time }
+        val danmakus = TreeSet<DanmakuItem> { o1, o2 -> if (o1.time - o2.time > 0L) 1 else -1 }
         val parser = XmlPullParserFactory.newInstance().newPullParser()
         parser.setInput(InputStreamReader(source))
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
@@ -35,7 +34,7 @@ object DanmakuLoader {
                         // 6:用户hash
                         // 7:弹幕id
                         val splits = p.split(",")
-                        val time = (splits[0].toFloat() * 1000).toInt()
+                        val time = (splits[0].toFloat() * 1000).toLong()
                         val type = when (splits[1].toInt()) {
                             1 -> Danmaku.TYPE_RL
                             5 -> Danmaku.TYPE_TOP

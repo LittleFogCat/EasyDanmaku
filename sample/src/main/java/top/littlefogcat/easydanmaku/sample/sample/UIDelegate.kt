@@ -63,7 +63,7 @@ class UIDelegate(private val activity: SampleActivity) {
             if (actionId == 100 || actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
                 val text: String = etMessage.text.toString()
                 val danmaku: Danmaku = RLDanmaku(
-                    DanmakuItem(text, videoView.currentPosition, Danmaku.TYPE_RL, Color.WHITE, 0)
+                    DanmakuItem(text, videoView.currentPosition.toLong(), Danmaku.TYPE_RL, Color.WHITE, 0)
                 )
                 danmakuView.sendDanmaku(danmaku)
                 hideImeAndSystemBars()

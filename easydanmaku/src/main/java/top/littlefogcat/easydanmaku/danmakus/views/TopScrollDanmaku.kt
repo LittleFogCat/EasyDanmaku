@@ -16,7 +16,7 @@ abstract class TopScrollDanmaku(item: DanmakuItem? = null) : Danmaku(item) {
         get() = Danmakus.Options.scrollingDanmakuDuration
 
     /**
-     * The time the whole danmaku is displayed.
+     * The moment the whole danmaku is displayed.
      */
     val entirelyDisplayTime: Int
         get() = (time + duration.toFloat() * width / (parent as ViewGroup).width).toInt()
