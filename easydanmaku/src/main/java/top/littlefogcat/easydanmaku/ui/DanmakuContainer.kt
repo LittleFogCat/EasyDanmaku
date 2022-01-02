@@ -4,11 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.SystemClock
-import top.littlefogcat.easydanmaku.Danmakus
 import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.easydanmaku.danmakus.DanmakuPools
-import top.littlefogcat.easydanmaku.danmakus.views.*
-import top.littlefogcat.easydanmaku.util.IntervalList
+import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
 import top.littlefogcat.esus.view.View
 import top.littlefogcat.esus.view.ViewGroup
 import top.littlefogcat.esus.view.ViewParent
@@ -105,7 +103,7 @@ class DanmakuContainer : ViewGroup() {
         if (fpsView.isVisible) {
             fps.onFrame(SystemClock.elapsedRealtimeNanos())
             fpsView.text = " FPS=${fps},time=${String.format("%.1f", time / 1000f)}s," +
-                    "danmakus=$childCount,pool=${DanmakuPools.size},discard=$discarded "
+                    "on_screen=$childCount,pool=${DanmakuPools.size},discard=$discarded "
         }
     }
 

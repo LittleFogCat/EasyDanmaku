@@ -103,6 +103,9 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
 
     /* ===================== other fields ===================== */
 
+    /**
+     * TODO: 考虑每个 Danmaku 使用单独的 Paint？就不用每次绘制都设置一遍属性了。
+     */
     override val paint: TextPaint = Danmakus.Globals.paint
 
     /** use for danmaku pool **/
@@ -151,7 +154,9 @@ open class Danmaku(item: DanmakuItem? = null) : TextView() {
     override fun onDraw(canvas: Canvas, parent: ViewParent?, time: Long) {
         super.onDraw(canvas, parent, time)
         if (!more && parent is ViewGroup) {
-            parent.removeView(this)
+            post {
+                parent.removeView(this)
+            }
         }
     }
 

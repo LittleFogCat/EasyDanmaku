@@ -2,6 +2,7 @@ package top.littlefogcat.esus.view
 
 import android.content.Context
 import android.graphics.*
+import android.os.Handler
 import androidx.annotation.IntDef
 
 /**
@@ -179,7 +180,10 @@ open class View {
     }
 
     /* ===================== Attach ===================== */
-    class AttachInfo {
+    class AttachInfo internal constructor(
+        val viewRootImpl: ViewRootImpl,
+        val handler: Handler
+    ) {
         var rootView: View? = null
         var drawingTime: Long = 0
         var forceLayout = false
@@ -307,7 +311,7 @@ open class View {
 
     /* ===================== section 2 ===================== */
 
-    @IntDef(VISIBLE, INVISIBLE)
+    @IntDef(VISIBLE, INVISIBLE, GONE)
     annotation class Visibility
 
     fun setVisibility(@Visibility visibility: Int) {
@@ -324,5 +328,10 @@ open class View {
             return root.surface
         }
         return null
+    }
+
+    fun post(action: Runnable) {
+        val handler = attachInfo?.handler
+        handler?.post(action)
     }
 }

@@ -31,8 +31,8 @@ allprojects {
         compile_sdk_version = 31
         min_sdk_version = 21
         target_sdk_version = 31
-        version_code = 3
-        version_name = "0.3.0"
+        version_code = 5
+        version_name = "0.3.2"
 
         androidx_version = "1.7.0"
         appcompat_version = "1.4.0"

@@ -153,7 +153,7 @@ class ViewRootImpl(
         if (root != view) {
             root.parent = this
             view = root
-            attachInfo = View.AttachInfo().also {
+            attachInfo = View.AttachInfo(this, handler).also {
                 it.rootView = root
                 it.context = surface?.getContext()
                 root.dispatchAttached(it)
@@ -185,8 +185,6 @@ class ViewRootImpl(
         if (view == null || destroy || surface == null) {
             return
         }
-//        Assert.setValue(this)
-//        EsusLog.v("ViewRootImpl", "doTraversals")
         traversalScheduled = false
         val time: Long = surface.time
         val w: Int = surface.w

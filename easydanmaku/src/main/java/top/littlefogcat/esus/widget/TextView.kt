@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.BoringLayout
 import android.text.TextPaint
+import android.util.Log
 import top.littlefogcat.esus.view.View
 import top.littlefogcat.esus.view.ViewParent
 
@@ -33,7 +34,7 @@ open class TextView() : View() {
     var stroke: Stroke? = null
 
     var textColor = Color.BLACK
-    override val paint = TextPaint(super.paint)
+    override val paint = TextPaint().apply { isAntiAlias = true }
     protected var boring: BoringLayout.Metrics? = null
 
     // 0b_0001_0000_0000_
@@ -89,12 +90,14 @@ open class TextView() : View() {
 
         // draw drawable
         drawableLeft?.let {
-            // Todo: The bitmap may be recycled. How this happens?
+            // Fixme: The bitmap may be recycled. How this happens?
             if (!(it as BitmapDrawable).bitmap.isRecycled) {
                 val padding = (height - drawableSize) / 2
                 it.setBounds(padding, padding, padding + drawableSize, padding + drawableSize)
                 it.draw(canvas)
                 x += height
+            } else {
+                Log.i(TAG, "onDraw: Bitmap is recycled! text = $text")
             }
         }
         // draw stroke

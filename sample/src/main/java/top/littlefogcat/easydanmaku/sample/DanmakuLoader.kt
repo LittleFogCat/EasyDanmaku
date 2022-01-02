@@ -1,6 +1,7 @@
 package top.littlefogcat.easydanmaku.sample
 
 import android.content.Context
+import android.os.SystemClock
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import top.littlefogcat.easydanmaku.danmakus.views.Danmaku
@@ -9,12 +10,19 @@ import top.littlefogcat.easydanmaku.sample.util.BitmapUtil
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
+import kotlin.random.Random
 
 /**
  * @author littlefogcat
  * @email littlefogcat@foxmail.com
  */
 object DanmakuLoader {
+    private val avatars = arrayOf(
+        R.drawable.cat, R.drawable.head, R.drawable.head2,
+        R.drawable.head3, R.drawable.head4, R.drawable.head5,
+        R.drawable.head6, R.drawable.head7, R.drawable.head8,
+    )
+
     fun load(context: Context, source: InputStream): Collection<DanmakuItem> {
         val danmakus = TreeSet<DanmakuItem> { o1, o2 -> if (o1.time - o2.time > 0L) 1 else -1 }
         val parser = XmlPullParserFactory.newInstance().newPullParser()
@@ -51,15 +59,17 @@ object DanmakuLoader {
 
                         if (type != Danmaku.TYPE_UNKNOWN && type != Danmaku.TYPE_ADVANCED) {
                             val item = DanmakuItem(t, time, type, color, 0, id, textSize / 25f)
-//                            if (id[id.lastIndex - 1] == '3') {
-                            // Test Avatar
-                            item.avatar = BitmapUtil.decodeResourceWithSize(
-                                context.resources,
-                                R.drawable.head,
-                                80f,
-                                80f
-                            )
-//                            }
+                            val random = Random.Default.nextInt(21)
+                            if (random < avatars.size) {
+                                // 随机添加头像
+                                val bmp = BitmapUtil.decodeResourceWithSize(
+                                    context.resources,
+                                    avatars[random],
+                                    80f,
+                                    80f
+                                )
+                                item.avatar = BitmapUtil.createRoundBitmap(bmp)
+                            }
                             danmakus.add(item)
                         }
                     }

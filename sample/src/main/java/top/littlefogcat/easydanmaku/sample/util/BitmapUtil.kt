@@ -1,9 +1,10 @@
 package top.littlefogcat.easydanmaku.sample.util
 
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
+import android.util.Log
 import kotlin.math.min
+
 
 /**
  * @author littlefogcat
@@ -47,4 +48,50 @@ object BitmapUtil {
         BitmapFactory.decodeResource(resources, id, opt)
         return opt
     }
+
+    /**
+     * 将原bitmap裁剪成正方形
+     *
+     * @param src 原bitmap
+     * @return 正方形的bitmap
+     */
+    fun centerCropSquare(src: Bitmap): Bitmap {
+        val w = src.width
+        val h = src.height
+        println("$w,$h")
+        return if (w == h) {
+            src
+        } else if (w > h) {
+            Bitmap.createBitmap(src, (w - h) / 2, 0, h, h)
+        } else {
+            Bitmap.createBitmap(src, 0, (h - w) / 2, w, w)
+        }
+    }
+
+    /**
+     * 创建圆形的Bitmap
+     *
+     * @param src 原Bitmap
+     * @return 创建的圆形Bitmap
+     */
+    fun createRoundBitmap(src: Bitmap): Bitmap {
+        val squareBmp = if (src.width == src.height) {
+            src
+        } else {
+            centerCropSquare(src) // 裁剪成正方形
+        }
+        val size = squareBmp.width
+        val radius = size / 2f
+        val circleBmp = Bitmap.createBitmap(size, size, squareBmp.config)
+        circleBmp.density = squareBmp.density // <======= 必须保证二者density相同，否则显示异常！
+        val canvas = Canvas(circleBmp)
+        val paint = Paint().apply {
+            isAntiAlias = true
+        }
+        canvas.drawCircle(radius, radius, radius, paint)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawBitmap(squareBmp, 0f, 0f, paint)
+        return circleBmp
+    }
+
 }

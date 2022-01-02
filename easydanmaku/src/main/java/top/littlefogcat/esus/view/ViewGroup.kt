@@ -168,7 +168,7 @@ abstract class ViewGroup : View(), ViewParent {
         return super.dispatchTouchEvent(e)
     }
 
-    /* ===================== other ===================== */
+    /* ===================== helper ===================== */
     protected inline fun allChildren(action: (View) -> Unit) {
         for (i in 0 until childCount) {
             action(children[i] ?: continue)

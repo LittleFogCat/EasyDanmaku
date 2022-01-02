@@ -75,5 +75,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:text="send" />
+        android:text="send"
+        android:visibility="gone" />
 </RelativeLayout>
