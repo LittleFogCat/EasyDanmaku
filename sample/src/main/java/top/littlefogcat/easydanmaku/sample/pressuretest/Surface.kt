@@ -27,7 +27,7 @@ class Surface : EsusSurfaceView {
      */
     var enableAntiMask = false
         set(enable) {
-            setLayerType(if (enable) LAYER_TYPE_SOFTWARE else LAYER_TYPE_HARDWARE, null)
+            setLayerType(if (enable) LAYER_TYPE_SOFTWARE else LAYER_TYPE_NONE, null)
             field = enable
         }
 

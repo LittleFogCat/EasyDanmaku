@@ -9,7 +9,6 @@ import top.littlefogcat.easydanmaku.danmakus.DanmakuItem
 import top.littlefogcat.easydanmaku.sample.util.BitmapUtil
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.util.*
 import kotlin.random.Random
 
 /**
@@ -24,7 +23,7 @@ object DanmakuLoader {
     )
 
     fun load(context: Context, source: InputStream): Collection<DanmakuItem> {
-        val danmakus = TreeSet<DanmakuItem> { o1, o2 -> if (o1.time - o2.time > 0L) 1 else -1 }
+        val danmakus = mutableListOf<DanmakuItem>()
         val parser = XmlPullParserFactory.newInstance().newPullParser()
         parser.setInput(InputStreamReader(source))
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
