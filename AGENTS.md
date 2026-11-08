@@ -23,9 +23,15 @@
 - 画面完全由 `DanmakuView.time`（Long，毫秒）驱动；每帧需在 `setActionOnFrame { danmakuView.time = videoPosition }` 中更新。`time` 不变就不会重绘。
 - 播放结束或不再使用时调用 `finish()`：停止 Choreographer 回调、销毁 SUS 线程并清屏。
 - `Danmakus.Options` / `Danmakus.Globals` 是进程级单例；`Globals.baseTextSize` 应由宿主按屏幕设置（默认 60f）。多个 `DanmakuView` 会共享 `DanmakuPools` 与全局 locator 状态（已知 TODO），不要假设多实例安全。
-- `sendDanmaku()` 只修改 `time`，最终落到空实现的 `addDanmakuImmediately()`，实际不会显示；需要真正添加请用 `addDanmaku()`（仍可能因放不下被丢弃）。`setDisplayArea(Rect)` 是未实现的 TODO，调用会抛异常。
+- `sendDanmaku()` 会把 `time` 重置为当前时间后立即加入容器，正常情况下会显示；是否成功仍取决于能否放下（放不下会被 discard）。`setDisplayArea(Rect)` 是未实现的 TODO，调用会抛异常。
 
 ## 数据与复用
-- `setDanmakus()` 接收 `DanmakuItem`。`DanmakuResolverImpl` 用只按 `time` 比较的 `TreeSet`：会自动排序，但相同时间戳的条目会被视为重复而丢弃（示例 loader 虽用永不为 0 的比较器保留重复项，进入 resolver 后仍会被丢弃）。
+- `setDanmakus()` 接收 `DanmakuItem`。`DanmakuResolverImpl` 用 `TreeMap` 按 `time` 分组，自动按时间排序，同一时间戳的条目会全部保留。
 - `Danmaku` 由 `DanmakuPools` 复用；移除时 reset，`onDetached()` 会 `recycle()` 头像 Bitmap。不要共享头像 Bitmap，也不要在移除后继续持有同一个 `Danmaku` 实例。
 - `DanmakuItem.time` 单位是毫秒；示例中 B 站 XML 的秒值会乘以 1000。
+
+## 分支与发布
+- `develop` 是日常开发分支，所有功能与修复都提交到这里。
+- `master` 只承载已发布版本，受保护，不能直接推送。
+- 里程碑发布：在 GitHub 开 PR `develop` → `master`，合并后在 `master` 上打 `vX.Y.Z` tag 并推送。
+- 紧急 hotfix（可选）：从 `master` 拉 `hotfix_xxx`，修复后合入 `master` 并打 patch tag，再回合 `develop`。
