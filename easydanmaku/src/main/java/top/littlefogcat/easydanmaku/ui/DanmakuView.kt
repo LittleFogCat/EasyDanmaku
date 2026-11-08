@@ -132,7 +132,7 @@ class DanmakuView : EsusSurfaceView, IDanmakuView {
     }
 
     override fun addDanmakuImmediately(danmaku: Danmaku) {
-
+        container.addView(danmaku)
     }
 
     override fun addDanmaku(danmaku: Danmaku) {
